@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="5" time="349.372" timestamp="2024-04-23T09:49:12.144639" hostname="Usiel-Ramirez"><testcase classname="Demo.test_crear_plan_de_pago.TestCrearPlanDePago" name="test_crear_plan_de_pago" time="15.260"><failure message="selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {&quot;method&quot;:&quot;css selector&quot;,&quot;selector&quot;:&quot;.even:nth-child(5) &gt; td:nth-child(5)&quot;}&#10;  (Session info: chrome=124.0.6367.61); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception&#10;Stacktrace:&#10;&#09;GetHandleVerifier [0x00007FF746F3F922+3045234]&#10;&#09;(No symbol) [0x00007FF746BE3652]&#10;&#09;(No symbol) [0x00007FF746AA7564]&#10;&#09;(No symbol) [0x00007FF746AF5F9D]&#10;&#09;(No symbol) [0x00007FF746AF606C]&#10;&#09;(No symbol) [0x00007FF746B3BDD7]&#10;&#09;(No symbol) [0x00007FF746B19DEF]&#10;&#09;(No symbol) [0x00007FF746B391C4]&#10;&#09;(No symbol) [0x00007FF746B19B53]&#10;&#09;(No symbol) [0x00007FF746AE813C]&#10;&#09;(No symbol) [0x00007FF746AE8D71]&#10;&#09;GetHandleVerifier [0x00007FF746F6E89D+3237613]&#10;&#09;GetHandleVerifier [0x00007FF746FB0BA7+3508727]&#10;&#09;GetHandleVerifier [0x00007FF746FA976F+3478975]&#10;&#09;GetHandleVerifier [0x00007FF746D1F1C6+815126]&#10;&#09;(No symbol) [0x00007FF746BEED0F]&#10;&#09;(No symbol) [0x00007FF746BE9854]&#10;&#09;(No symbol) [0x00007FF746BE99E2]&#10;&#09;(No symbol) [0x00007FF746BDA574]&#10;&#09;BaseThreadInitThunk [0x00007FF894A57344+20]&#10;&#09;RtlUserThreadStart [0x00007FF8956026B1+33]">self = &lt;test_crear_plan_de_pago.TestCrearPlanDePago object at 0x0000023DFB5236E0&gt;
+
+    def test_crear_plan_de_pago(self):
+    
+      #Inicio de sesión
+      self.driver.get("http://concasa-real-estate.s3-website-us-east-1.amazonaws.com/")
+      self.driver.maximize_window()
+      self.driver.find_element(By.NAME, "emaiI").click()
+      self.driver.find_element(By.NAME, "emaiI").send_keys("usiel.ramirez@concasa.com")
+      self.driver.find_element(By.NAME, "passI").click()
+      self.driver.find_element(By.NAME, "passI").send_keys("123456")
+      self.driver.find_element(By.CSS_SELECTOR, ".section-container:nth-child(6) &gt; .mr-2").click()
+    
+      # Redirección al apartado de gestión de ventas
+      WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located((By.LINK_TEXT, "Gestión de ventas")))
+      WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable((By.LINK_TEXT, "Gestión de ventas")))
+      element = self.driver.find_element(By.LINK_TEXT, "Gestión de ventas")
+      self.driver.execute_script("arguments[0].click();", element)
+    
+    
+    
+      #Selección del expediente que vamos a crearle un plan de pagos
+&gt;     element1 = self.driver.find_element(By.CSS_SELECTOR, ".even:nth-child(5) &gt; td:nth-child(5)")
+
+Demo\test_crear_plan_de_pago.py:43: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+venv\Lib\site-packages\selenium\webdriver\remote\webdriver.py:741: in find_element
+    return self.execute(Command.FIND_ELEMENT, {"using": by, "value": value})["value"]
+venv\Lib\site-packages\selenium\webdriver\remote\webdriver.py:347: in execute
+    self.error_handler.check_response(response)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x0000023DF8D5D730&gt;
+response = {'status': 404, 'value': '{"value":{"error":"no such element","message":"no such element: Unable to locate element: {\...07FF746BDA574]\\n\\tBaseThreadInitThunk [0x00007FF894A57344+20]\\n\\tRtlUserThreadStart [0x00007FF8956026B1+33]\\n"}}'}
+
+    def check_response(self, response: Dict[str, Any]) -&gt; None:
+        """Checks that a JSON response from the WebDriver does not have an
+        error.
+    
+        :Args:
+         - response - The JSON response from the WebDriver server as a dictionary
+           object.
+    
+        :Raises: If the response contains an error message.
+        """
+        status = response.get("status", None)
+        if not status or status == ErrorCode.SUCCESS:
+            return
+        value = None
+        message = response.get("message", "")
+        screen: str = response.get("screen", "")
+        stacktrace = None
+        if isinstance(status, int):
+            value_json = response.get("value", None)
+            if value_json and isinstance(value_json, str):
+                import json
+    
+                try:
+                    value = json.loads(value_json)
+                    if len(value) == 1:
+                        value = value["value"]
+                    status = value.get("error", None)
+                    if not status:
+                        status = value.get("status", ErrorCode.UNKNOWN_ERROR)
+                        message = value.get("value") or value.get("message")
+                        if not isinstance(message, str):
+                            value = message
+                            message = message.get("message")
+                    else:
+                        message = value.get("message", None)
+                except ValueError:
+                    pass
+    
+        exception_class: Type[WebDriverException]
+        e = ErrorCode()
+        error_codes = [item for item in dir(e) if not item.startswith("__")]
+        for error_code in error_codes:
+            error_info = getattr(ErrorCode, error_code)
+            if isinstance(error_info, list) and status in error_info:
+                exception_class = getattr(ExceptionMapping, error_code, WebDriverException)
+                break
+        else:
+            exception_class = WebDriverException
+    
+        if not value:
+            value = response["value"]
+        if isinstance(value, str):
+            raise exception_class(value)
+        if message == "" and "message" in value:
+            message = value["message"]
+    
+        screen = None  # type: ignore[assignment]
+        if "screen" in value:
+            screen = value["screen"]
+    
+        stacktrace = None
+        st_value = value.get("stackTrace") or value.get("stacktrace")
+        if st_value:
+            if isinstance(st_value, str):
+                stacktrace = st_value.split("\n")
+            else:
+                stacktrace = []
+                try:
+                    for frame in st_value:
+                        line = frame.get("lineNumber", "")
+                        file = frame.get("fileName", "&lt;anonymous&gt;")
+                        if line:
+                            file = f"{file}:{line}"
+                        meth = frame.get("methodName", "&lt;anonymous&gt;")
+                        if "className" in frame:
+                            meth = f"{frame['className']}.{meth}"
+                        msg = "    at %s (%s)"
+                        msg = msg % (meth, file)
+                        stacktrace.append(msg)
+                except TypeError:
+                    pass
+        if exception_class == UnexpectedAlertPresentException:
+            alert_text = None
+            if "data" in value:
+                alert_text = value["data"].get("text")
+            elif "alert" in value:
+                alert_text = value["alert"].get("text")
+            raise exception_class(message, screen, stacktrace, alert_text)  # type: ignore[call-arg]  # mypy is not smart enough here
+&gt;       raise exception_class(message, screen, stacktrace)
+E       selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate element: {"method":"css selector","selector":".even:nth-child(5) &gt; td:nth-child(5)"}
+E         (Session info: chrome=124.0.6367.61); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
+E       Stacktrace:
+E       	GetHandleVerifier [0x00007FF746F3F922+3045234]
+E       	(No symbol) [0x00007FF746BE3652]
+E       	(No symbol) [0x00007FF746AA7564]
+E       	(No symbol) [0x00007FF746AF5F9D]
+E       	(No symbol) [0x00007FF746AF606C]
+E       	(No symbol) [0x00007FF746B3BDD7]
+E       	(No symbol) [0x00007FF746B19DEF]
+E       	(No symbol) [0x00007FF746B391C4]
+E       	(No symbol) [0x00007FF746B19B53]
+E       	(No symbol) [0x00007FF746AE813C]
+E       	(No symbol) [0x00007FF746AE8D71]
+E       	GetHandleVerifier [0x00007FF746F6E89D+3237613]
+E       	GetHandleVerifier [0x00007FF746FB0BA7+3508727]
+E       	GetHandleVerifier [0x00007FF746FA976F+3478975]
+E       	GetHandleVerifier [0x00007FF746D1F1C6+815126]
+E       	(No symbol) [0x00007FF746BEED0F]
+E       	(No symbol) [0x00007FF746BE9854]
+E       	(No symbol) [0x00007FF746BE99E2]
+E       	(No symbol) [0x00007FF746BDA574]
+E       	BaseThreadInitThunk [0x00007FF894A57344+20]
+E       	RtlUserThreadStart [0x00007FF8956026B1+33]
+
+venv\Lib\site-packages\selenium\webdriver\remote\errorhandler.py:229: NoSuchElementException</failure></testcase><testcase classname="Demo.test_flujo_completo_1.Testflujocompleto1" name="test_flujo_completo_1" time="70.450" /><testcase classname="Demo.test_flujo_completo_2.Testflujocompleto2" name="test_flujo_completo_2" time="84.944" /><testcase classname="Demo.test_flujo_completo_3.Testflujocompleto3" name="test_flujo_completo_3" time="80.427" /><testcase classname="Demo.test_flujo_completo_4.Testflujocompleto4" name="test_flujo_completo_4" time="97.915" /></testsuite></testsuites>
