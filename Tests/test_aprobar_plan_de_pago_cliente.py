@@ -45,5 +45,5 @@ class TestTestaprobarplandepagocliente():
     self.driver.find_element(By.XPATH, "//li[2]/a/span").click()
 
     #Aprueba el plan de pagos
-    #self.driver.find_element(By.XPATH, "//div[5]/button").click()
+    self.driver.find_element(By.XPATH, "//div[5]/button").click()
   

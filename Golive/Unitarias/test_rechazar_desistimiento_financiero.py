@@ -68,7 +68,7 @@ class TestTestrechazardesistimientofinanciero():
     # 18 | Espera que el botón de "Aprobar" este disponible
     WebDriverWait(self.driver, 30).until(expected_conditions.presence_of_element_located((By.CSS_SELECTOR, ".reject-button")))
     # 19 | Presiona el botón de "Aprobar"
-    element = self.driver.find_element(By.CSS_SELECTOR, ".accept-button")
+    element = self.driver.find_element(By.CSS_SELECTOR, ".reject-button")
     self.driver.execute_script("arguments[0].click();", element)
     # 20 | Espera que el botón de "Sí" este disponible del modal de aceptar desistimiento
     WebDriverWait(self.driver, 30).until(expected_conditions.presence_of_element_located((By.CSS_SELECTOR, ".actionsContainer > .accept-button")))
