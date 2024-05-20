@@ -46,10 +46,10 @@ class TestTestaprobarplandepagoSAF():
     element = self.driver.find_element(By.XPATH, "//li[5]/a")
     self.driver.execute_script("arguments[0].click();", element)
     # 11 | Espera que el expediente que se va a aprobar esté disponible
-    WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located((By.LINK_TEXT, "9941")))
-    WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable((By.LINK_TEXT, "9941")))
+    WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located((By.LINK_TEXT, "9911")))
+    WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable((By.LINK_TEXT, "9911")))
     # 12 | Presiona el expediente para la aprobación
-    element = self.driver.find_element(By.LINK_TEXT, "9941")
+    element = self.driver.find_element(By.LINK_TEXT, "9911")
     self.driver.execute_script("arguments[0].click();", element)
     # 13 | Espera que el espacio de razón este disponible
     WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located((By.ID, "comment")))

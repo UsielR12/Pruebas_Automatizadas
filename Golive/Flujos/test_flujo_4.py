@@ -11,7 +11,7 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.support import expected_conditions as EC
 
 
-class TestFlujo3():
+class TestFlujo4():
     def setup_method(self, method):
         self.driver = webdriver.Chrome()
         self.driver.maximize_window()  # Pone el navegador en tamaño completo
@@ -20,7 +20,7 @@ class TestFlujo3():
     def teardown_method(self, method):
         self.driver.quit()
 
-    def test_flujo_3(self):
+    def test_flujo_4(self):
         # Test name: flujo 1
         # Primera parte: Crear plan de pago
         # 1 | Abre el módulo de Asesor de ventas
@@ -236,9 +236,9 @@ class TestFlujo3():
         element = self.driver.find_element(By.CSS_SELECTOR, ".fade:nth-child(3) .pagination-button-pwa:nth-child(4)")
         self.driver.execute_script("arguments[0].click();", element)
         # 16 | Espera que el expediente que se quiere presionar este disponible
-        WebDriverWait(self.driver, 30).until(expected_conditions.presence_of_element_located((By.LINK_TEXT, "40")))
+        WebDriverWait(self.driver, 30).until(expected_conditions.presence_of_element_located((By.LINK_TEXT, "37")))
         # 17 | Presiona el expediente que se a gestionar el desistimiento
-        element = self.driver.find_element(By.LINK_TEXT, "40")
+        element = self.driver.find_element(By.LINK_TEXT, "37")
         self.driver.execute_script("arguments[0].click();", element)
         # 18 | Espera que el botón de "Aprobar" este disponible
         WebDriverWait(self.driver, 30).until(

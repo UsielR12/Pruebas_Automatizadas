@@ -58,12 +58,12 @@ class TestTestrechazardesistimientofinanciero():
     # 14 | Espera que cargue
     time.sleep(5)
     # 15 | Va la segunda página de los desistimientos
-    element = self.driver.find_element(By.CSS_SELECTOR, ".fade:nth-child(3) .pagination-button-pwa:nth-child(3)")
+    element = self.driver.find_element(By.CSS_SELECTOR, ".fade:nth-child(3) .pagination-button-pwa:nth-child(4)")
     self.driver.execute_script("arguments[0].click();", element)
     # 16 | Espera que el expediente que se quiere presionar este disponible
-    WebDriverWait(self.driver, 30).until(expected_conditions.presence_of_element_located((By.LINK_TEXT, "29")))
+    WebDriverWait(self.driver, 30).until(expected_conditions.presence_of_element_located((By.LINK_TEXT, "38")))
     # 17 | Presiona el expediente que se a gestionar el desistimiento
-    element = self.driver.find_element(By.LINK_TEXT, "29")
+    element = self.driver.find_element(By.LINK_TEXT, "38")
     self.driver.execute_script("arguments[0].click();", element)
     # 18 | Espera que el botón de "Aprobar" este disponible
     WebDriverWait(self.driver, 30).until(expected_conditions.presence_of_element_located((By.CSS_SELECTOR, ".reject-button")))

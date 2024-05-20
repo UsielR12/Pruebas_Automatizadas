@@ -47,10 +47,10 @@ class TestCrearPlanDePago():
     # .even:nth-child(2) > td:nth-child(1) = Cliente prueba 2
     # .even:nth-child(3) > td:nth-child(1) = Cliente prueba 3
     # .even:nth-child(4) > td:nth-child(1) = Cliente prueba 4
-    WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located((By.CSS_SELECTOR, ".even:nth-child(4) > td:nth-child(1)"))) # el expediente que abrimos
-    WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".even:nth-child(4) > td:nth-child(1)")))
+    WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located((By.CSS_SELECTOR, ".even:nth-child(1) > td:nth-child(1)"))) # el expediente que abrimos
+    WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".even:nth-child(1) > td:nth-child(1)")))
     # 11 | Presiona el expediente al que se va a crear el plan de pago
-    element1 = self.driver.find_element(By.CSS_SELECTOR, ".even:nth-child(4) > td:nth-child(1)")
+    element1 = self.driver.find_element(By.CSS_SELECTOR, ".even:nth-child(1) > td:nth-child(1)")
     self.driver.execute_script("arguments[0].click();", element1)
     # 12 | Espera que el espacio de cantidad de cuotas este disponible
     WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located((By.CSS_SELECTOR, ".number-input-container")))

@@ -49,11 +49,11 @@ class TestFlujo2():
         # .even:nth-child(3) > td:nth-child(1) = Cliente prueba 3
         # .even:nth-child(4) > td:nth-child(1) = Cliente prueba 4
         WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located(
-            (By.CSS_SELECTOR, ".even:nth-child(1) > td:nth-child(1)")))  # el expediente que abrimos
+            (By.CSS_SELECTOR, ".even:nth-child(2) > td:nth-child(1)")))  # el expediente que abrimos
         WebDriverWait(self.driver, 60).until(
-            EC.element_to_be_clickable((By.CSS_SELECTOR, ".even:nth-child(1) > td:nth-child(1)")))
+            EC.element_to_be_clickable((By.CSS_SELECTOR, ".even:nth-child(2) > td:nth-child(1)")))
         # 11 | Presiona el expediente al que se va a crear el plan de pago
-        element1 = self.driver.find_element(By.CSS_SELECTOR, ".even:nth-child(1) > td:nth-child(1)")
+        element1 = self.driver.find_element(By.CSS_SELECTOR, ".even:nth-child(2) > td:nth-child(1)")
         self.driver.execute_script("arguments[0].click();", element1)
         # 12 | Espera que el botón de crear plan este disponible
         WebDriverWait(self.driver, 5).until(
@@ -77,7 +77,7 @@ class TestFlujo2():
         # 3 | Presiona el espacio de email
         self.driver.find_element(By.NAME, "emaiI").click()
         # 4 | Digita el email
-        self.driver.find_element(By.NAME, "emaiI").send_keys("prueba.cliente1.concasahome@yopmail.com")
+        self.driver.find_element(By.NAME, "emaiI").send_keys("prueba.cliente2.concasahome@yopmail.com")
         # 5 | Presiona el espacio de la contraseña
         self.driver.find_element(By.NAME, "passI").click()
         # 6 | Digita la contraseña
@@ -129,14 +129,14 @@ class TestFlujo2():
         element = self.driver.find_element(By.CSS_SELECTOR, ".card-body:nth-child(1)")
         self.driver.execute_script("arguments[0].click();", element)
         # 11 | Espera que el expediente que se va a seleccionar este disponible
-        WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located((By.LINK_TEXT, "9911")))
-        WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable((By.LINK_TEXT, "9911")))
+        WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located((By.LINK_TEXT, "9921")))
+        WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable((By.LINK_TEXT, "9921")))
         # 12 | Presiona el expediente que se va a desistir
         # 9911: Cliente 1
         # 9921: Cliente 2
         # 9931: Cliente 3
         # 9941: Cliente 4
-        element = self.driver.find_element(By.LINK_TEXT, "9911")
+        element = self.driver.find_element(By.LINK_TEXT, "9921")
         self.driver.execute_script("arguments[0].click();", element)
         # 13 | Espera que la sección de "Información" del expediente cargue
         WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located((By.LINK_TEXT, "Información")))
@@ -236,9 +236,9 @@ class TestFlujo2():
         element = self.driver.find_element(By.CSS_SELECTOR, ".fade:nth-child(3) .pagination-button-pwa:nth-child(3)")
         self.driver.execute_script("arguments[0].click();", element)
         # 14 | Espera que el expediente que se quiere presionar este disponible
-        WebDriverWait(self.driver, 30).until(expected_conditions.presence_of_element_located((By.LINK_TEXT, "33")))
+        WebDriverWait(self.driver, 30).until(expected_conditions.presence_of_element_located((By.LINK_TEXT, "39")))
         # 15 | Presiona el expediente que se a gestionar el desistimiento
-        element = self.driver.find_element(By.LINK_TEXT, "33")
+        element = self.driver.find_element(By.LINK_TEXT, "39")
         self.driver.execute_script("arguments[0].click();", element)
         # 16 | Espera que el botón de "Aprobar" este disponible
         WebDriverWait(self.driver, 30).until(
