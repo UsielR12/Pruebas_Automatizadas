@@ -11,7 +11,7 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.support import expected_conditions as EC
 
 
-class TestFlujo4():
+class TestFlujo6():
     def setup_method(self, method):
         self.driver = webdriver.Chrome()
         self.driver.maximize_window()  # Pone el navegador en tamaño completo
@@ -20,8 +20,8 @@ class TestFlujo4():
     def teardown_method(self, method):
         self.driver.quit()
 
-    def test_flujo_4(self):
-        # Test name: flujo 4
+    def test_flujo_6(self):
+        # Test name: flujo 6
         # Primera parte: Crear plan de pago con modificaciones
         # 1 | Abre el módulo de Asesor de ventas
         self.driver.get("http://concasa-real-estate.s3-website-us-east-1.amazonaws.com/")
@@ -185,8 +185,99 @@ class TestFlujo4():
         # 13 | Hace una espera de 5 segundos para que se apruebe el plan de pagos
         time.sleep(5)
 
+        # cuarta parte: crear desistimiento
+        # 1 | Abre el módulo de financiero
+        self.driver.get("http://concasa-financial-advisor.s3-website-us-east-1.amazonaws.com/login")
+        # 2 | Pone el navegador en tamaño completo
+        self.driver.maximize_window()
+        # 3 | Espera que el espacio del email este disponible
+        WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located((By.NAME, "emaiI")))
+        WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable((By.NAME, "emaiI")))
+        # 4 | Presiona el espacio de email
+        self.driver.find_element(By.NAME, "emaiI").click()
+        # 5 | Digita el email "asesor.financiero.concasa@yopmail.com"
+        self.driver.find_element(By.NAME, "emaiI").send_keys("asesor.financiero.concasa@yopmail.com")
+        # 6 | Presiona el espacio de contraseña
+        self.driver.find_element(By.NAME, "passI").click()
+        # 7 | Digita la contraseña "123456"
+        self.driver.find_element(By.NAME, "passI").send_keys("123456")
+        # 8 | Presiona el boton de iniciar sesión
+        self.driver.find_element(By.CSS_SELECTOR, ".textPassword > .beginning-button").click()
+        # 9 | Espera que la sección de expedientes este cargada
+        WebDriverWait(self.driver, 60).until(
+            EC.visibility_of_element_located((By.CSS_SELECTOR, ".card-body:nth-child(1)")))
+        WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".card-body:nth-child(1)")))
+        # 10 | Presiona la sección de expedientes
+        element = self.driver.find_element(By.CSS_SELECTOR, ".card-body:nth-child(1)")
+        self.driver.execute_script("arguments[0].click();", element)
+        # 11 | Espera que el expediente que se va a seleccionar este disponible
+        WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located((By.LINK_TEXT, "9911")))
+        WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable((By.LINK_TEXT, "9911")))
+        # 12 | Presiona el expediente que se va a desistir
+        # 9911: Cliente 1
+        # 9921: Cliente 2
+        # 9931: Cliente 3
+        # 9941: Cliente 4
+        element = self.driver.find_element(By.LINK_TEXT, "9911")
+        self.driver.execute_script("arguments[0].click();", element)
+        # 13 | Espera que la sección de "Información" del expediente cargue
+        WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located((By.LINK_TEXT, "Información")))
+        WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable((By.LINK_TEXT, "Información")))
+        # 14 | Hace un move to element
+        element2 = self.driver.find_element(By.LINK_TEXT, "Información")
+        actions = ActionChains(self.driver)
+        actions.move_to_element(element2).perform()
+        # 15 | Hace un moveOut
+        element = self.driver.find_element(By.CSS_SELECTOR, "body")
+        actions = ActionChains(self.driver)
+        actions.move_to_element(element).perform()
+        # 16 | Presiona el botón "desistir"
+        element1 = self.driver.find_element(By.CSS_SELECTOR, ".button-desist")
+        self.driver.execute_script("arguments[0].click();", element1)
+        # 17 | Presiona el combobox de "seleccionar razón"
+        element = self.driver.find_element(By.CSS_SELECTOR, ".modal-section-container #dModal-Toggle")
+        self.driver.execute_script("arguments[0].click();", element)
+        # 18 | Presiona la razón del desistimiento
+        element = self.driver.find_element(By.LINK_TEXT, "Capacidad de pago insuficiente")
+        self.driver.execute_script("arguments[0].click();", element)
+        # 18 | Digita la fecha del desistimiento
+        self.driver.find_element(By.CSS_SELECTOR, ".picker-input_modal input").send_keys("5/6/2024")
+        # 19 | Presiona el espacio "Monto de devolución"
+        element = self.driver.find_element(By.CSS_SELECTOR, ".text-input-modal-money")
+        self.driver.execute_script("arguments[0].click();", element)
+        # 20 | Digita el monto de devolución
+        self.driver.find_element(By.CSS_SELECTOR, ".text-input-modal-money").send_keys("00")
+        # 21 | Presiona el espacio "Notas"
+        element = self.driver.find_element(By.CSS_SELECTOR, ".modal-section-container .observationText")
+        self.driver.execute_script("arguments[0].click();", element)
+        # 22 | Digita la nota del desistimiento
+        self.driver.find_element(By.CSS_SELECTOR, ".modal-section-container .observationText").send_keys(
+            "No hay pago suficiente")
+        # 23 | Presiona el espacio de registrar desistimiento
+        element = self.driver.find_element(By.CSS_SELECTOR, ".modal-content")
+        self.driver.execute_script("arguments[0].click();", element)
+        # 24 | Presiona el botón "Registrar"
+        element = self.driver.find_element(By.CSS_SELECTOR, ".large-modal-standard-button")
+        self.driver.execute_script("arguments[0].click();", element)
+        # 25 | Presiona el botón de aceptar y se crea el desistimiento
+        element = self.driver.find_element(By.CSS_SELECTOR, ".accept-button")
+        self.driver.execute_script("arguments[0].click();", element)
+        # 26 | Espera que el modal de que se realizó con exito aparezca
+        WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located((By.CSS_SELECTOR, ".swal2-confirm")))
+        WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".swal2-confirm")))
+        # 27 | Presiona "ok" del último modal que se realizo con exito
+        element = self.driver.find_element(By.CSS_SELECTOR, ".swal2-confirm")
+        self.driver.execute_script("arguments[0].click();", element)
+        # 28 | Presiona el botón de perfil
+        element = self.driver.find_element(By.CSS_SELECTOR, ".c-pointer")
+        self.driver.execute_script("arguments[0].click();", element)
+        # 29 | Presiona el botón de cerrar sesión
+        element = self.driver.find_element(By.CSS_SELECTOR, ".ai-icon:nth-child(3)")
+        self.driver.execute_script("arguments[0].click();", element)
+        # 30 | hace una espera de 8 segundos
+        time.sleep(8)
 
-        # Cuarta parte: agregar pago de cuota financiero
+        # quinta parte: aprobar el desistimiento
         # 1 | Abre el módulo de financiero
         self.driver.get("http://concasa-financial-advisor.s3-website-us-east-1.amazonaws.com/login")
         # 2 | Pone el navegador en tamaño completo
@@ -196,109 +287,56 @@ class TestFlujo4():
         WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable((By.NAME, "emaiI")))
         # 4 | Presiona el espacio de email en el espacio de email
         self.driver.find_element(By.NAME, "emaiI").click()
-        # 5 | Digita el email "asesor.financiero.concasa@yopmail.com"
-        self.driver.find_element(By.NAME, "emaiI").send_keys("asesor.financiero.concasa@yopmail.com")
-        # 6 | Digita la contraseña "123456"
+        # 5 | Digita el email "usiel.ramirez@concasa.com"
+        self.driver.find_element(By.NAME, "emaiI").send_keys("usiel.ramirez@concasa.com")
+        # 6 | Presiona el espacio de contraseña
+        self.driver.find_element(By.NAME, "passI").click()
+        # 7 | Digita la contraseña "123456"
         self.driver.find_element(By.NAME, "passI").send_keys("123456")
-        # 7 | Presiona el boton de iniciar sesión
+        # 8 | Presiona el boton de iniciar sesión
         self.driver.find_element(By.CSS_SELECTOR, ".textPassword > .beginning-button").click()
-        # 8 | Hace un mouse Over
+        # 9 | Hace un mouse Over
         element = self.driver.find_element(By.CSS_SELECTOR, ".textPassword > .beginning-button")
         actions = ActionChains(self.driver)
         actions.move_to_element(element).perform()
-        # 9 | Hace un mouse Out
+        # 10 | Hace un mouse Out
         element = self.driver.find_element(By.CSS_SELECTOR, "body")
         actions = ActionChains(self.driver)
         actions.move_to_element(element).perform()
-        # 10 | Espera que el expediente este visible en la pantalla
-        WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located((By.LINK_TEXT, "9911")))
-        WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable((By.LINK_TEXT, "9911")))
-        # 11 | Presiona el expediente al que le va a agregar la cuota
-        element = self.driver.find_element(By.LINK_TEXT, "9911")
+        # 11 | Espera que cargue el botón de "Aprobaciones"
+        WebDriverWait(self.driver, 30).until(
+            expected_conditions.presence_of_element_located((By.LINK_TEXT, "Aprobaciones")))
+        # 12 | Presiona la sección de "Aprobaciones" del menu hamburguesa
+        element = self.driver.find_element(By.LINK_TEXT, "Aprobaciones")
         self.driver.execute_script("arguments[0].click();", element)
-        # 12 | Espera que  la sesión plan de pagos este visible
-        WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located((By.LINK_TEXT, "Plan de Pagos")))
-        WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable((By.LINK_TEXT, "Plan de Pagos")))
-        # 13 | Presiona la sesión plan de pagos dentro del expediente
-        element = self.driver.find_element(By.LINK_TEXT, "Plan de Pagos")
+        # 13 | Presiona la sección de Desistimientos
+        element = self.driver.find_element(By.LINK_TEXT, "Desistimientos")
         self.driver.execute_script("arguments[0].click();", element)
-        # 14 | Presiona el botón agregar pago
-        element = self.driver.find_element(By.CSS_SELECTOR, ".button-addClient")
+        # 14 | Espera que cargue
+        time.sleep(5)
+        # 15 | Va la segunda página de los desistimientos
+        element = self.driver.find_element(By.CSS_SELECTOR, ".fade:nth-child(3) .pagination-button-pwa:nth-child(4)")
         self.driver.execute_script("arguments[0].click();", element)
-        # 15 | Espera que carguen los espacios para registrar el pago
-        WebDriverWait(self.driver, 60).until(
-            EC.visibility_of_element_located((By.CSS_SELECTOR, ".text-input-modal-money")))
-        WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".text-input-modal-money")))
-        # 16 | Presiona el espacio "Monto abono"
-        element = self.driver.find_element(By.CSS_SELECTOR, ".text-input-modal-money")
+        # 14 | Espera que el expediente que se quiere presionar este disponible
+        WebDriverWait(self.driver, 30).until(expected_conditions.presence_of_element_located((By.LINK_TEXT, "43")))
+        # 15 | Presiona el expediente que se a gestionar el desistimiento
+        element = self.driver.find_element(By.LINK_TEXT, "43")
         self.driver.execute_script("arguments[0].click();", element)
-        # 17 | Digita la cantidad a abonar
-        self.driver.find_element(By.CSS_SELECTOR, ".text-input-modal-money").send_keys("750")
-        # 18 | Espera que el espacio "Recibo Manual" este disponible
-        WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located(
-            (By.CSS_SELECTOR, ".modal-section-container:nth-child(2) .text-input-modal")))
-        WebDriverWait(self.driver, 60).until(
-            EC.element_to_be_clickable((By.CSS_SELECTOR, ".modal-section-container:nth-child(2) .text-input-modal")))
-        # 19 | Presiona el espacio "Recibo Manual"
-        element = self.driver.find_element(By.CSS_SELECTOR, ".modal-section-container:nth-child(2) .text-input-modal")
-        self.driver.execute_script("arguments[0].click();", element)
-        # 20 | Digita "123" en el espacio "Recibo Manual"
-        self.driver.find_element(By.CSS_SELECTOR, ".modal-section-container:nth-child(2) .text-input-modal").send_keys(
-            "123")
-        # 21 | Espera que el espacio "Referencia" este disponible
-        WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located(
-            (By.CSS_SELECTOR, ".modal-section-container:nth-child(3) .text-input-modal")))
-        WebDriverWait(self.driver, 60).until(
-            EC.element_to_be_clickable((By.CSS_SELECTOR, ".modal-section-container:nth-child(3) .text-input-modal")))
-        # 22 | Presiona el espacio "Referencia"
-        element = self.driver.find_element(By.CSS_SELECTOR, ".modal-section-container:nth-child(3) .text-input-modal")
-        self.driver.execute_script("arguments[0].click();", element)
-        # 23 | Digita "123" en el espacio "Referencia"
-        self.driver.find_element(By.CSS_SELECTOR, ".modal-section-container:nth-child(3) .text-input-modal").send_keys(
-            "1234")
-        # 24 | Espera que el espacio "Tipo de pago" este disponible
-        WebDriverWait(self.driver, 60).until(
-            EC.visibility_of_element_located((By.CSS_SELECTOR, ".form-check:nth-child(3) > .form-check-input")))
-        WebDriverWait(self.driver, 60).until(
-            EC.element_to_be_clickable((By.CSS_SELECTOR, ".form-check:nth-child(3) > .form-check-input")))
-        # 25 | Seleciona la opción "Efectivo" en el espacio "Tipo de pago"
-        element = self.driver.find_element(By.CSS_SELECTOR, ".form-check:nth-child(3) > .form-check-input")
-        self.driver.execute_script("arguments[0].click();", element)
-        # 26 | Espera que el espacio "Notas" este disponible
-        WebDriverWait(self.driver, 60).until(
-            EC.visibility_of_element_located((By.CSS_SELECTOR, ".modal-section-container > #comment")))
-        WebDriverWait(self.driver, 60).until(
-            EC.element_to_be_clickable((By.CSS_SELECTOR, ".modal-section-container > #comment")))
-        # 27 | Presiona el espacio "Notas"
-        element = self.driver.find_element(By.CSS_SELECTOR, ".modal-section-container > #comment")
-        self.driver.execute_script("arguments[0].click();", element)
-        # 28 | Digita "abc" en el espacio "Notas"
-        self.driver.find_element(By.CSS_SELECTOR, ".modal-section-container > #comment").send_keys("abc")
-        # 29 | Espera que el botón "Registrar" esté disponible
-        WebDriverWait(self.driver, 60).until(
-            EC.visibility_of_element_located((By.CSS_SELECTOR, ".large-modal-standard-button")))
-        WebDriverWait(self.driver, 60).until(
-            EC.element_to_be_clickable((By.CSS_SELECTOR, ".large-modal-standard-button")))
-        # 30 | Presiona el botón "Registrar"
-        element = self.driver.find_element(By.CSS_SELECTOR, ".large-modal-standard-button")
-        self.driver.execute_script("arguments[0].click();", element)
-        # 31 | Hace un mouseOver
-        element = self.driver.find_element(By.CSS_SELECTOR, ".large-modal-standard-button")
-        actions = ActionChains(self.driver)
-        actions.move_to_element(element).perform()
-        # 32 | Hace un mouseOut
-        element = self.driver.find_element(By.CSS_SELECTOR, "body")
-        actions = ActionChains(self.driver)
-        actions.move_to_element(element).perform()
-        # 33 | Espera que el botón de "Aceptar" este disponible
-        WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located((By.CSS_SELECTOR, ".accept-button")))
-        WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".accept-button")))
-        # 34 | Presiona el botón "Aceptar"
+        # 16 | Espera que el botón de "Aprobar" este disponible
+        WebDriverWait(self.driver, 30).until(
+            expected_conditions.presence_of_element_located((By.CSS_SELECTOR, ".accept-button")))
+        # 17 | Presiona el botón de "Aprobar"
         element = self.driver.find_element(By.CSS_SELECTOR, ".accept-button")
         self.driver.execute_script("arguments[0].click();", element)
-        # 35 | Espera el botón de "ok" del modal que se realizó con exito el registro
-        WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located((By.CSS_SELECTOR, ".swal-button")))
-        WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".swal-button")))
-        # 36 | Presiona el botón "Ok"
-        element = self.driver.find_element(By.CSS_SELECTOR, ".swal-button")
+        # 18 | Espera que el botón de "Sí" este disponible del modal de aceptar desistimiento
+        WebDriverWait(self.driver, 30).until(
+            expected_conditions.presence_of_element_located((By.CSS_SELECTOR, ".actionsContainer > .accept-button")))
+        # 19 | Presiona el botón de "Sí" del modal de aceptar desistimiento
+        element = self.driver.find_element(By.CSS_SELECTOR, ".actionsContainer > .accept-button")
+        self.driver.execute_script("arguments[0].click();", element)
+        # 20 | Espera que el botón de "Ok" este disponible del modal de se realizó con exito el desistimiento
+        WebDriverWait(self.driver, 30).until(
+            expected_conditions.presence_of_element_located((By.CSS_SELECTOR, ".swal2-confirm")))
+        # 21 | Presiona el botón de "Ok" del modal de se realizó con exito el desistimiento
+        element = self.driver.find_element(By.CSS_SELECTOR, ".swal2-confirm")
         self.driver.execute_script("arguments[0].click();", element)
