@@ -1,3 +1,5 @@
+import os
+
 import pytest
 import time
 import json
@@ -20,7 +22,13 @@ class TestFlujo1():
         chrome_options.add_argument("--no-sandbox")
         chrome_options.add_argument("--disable-dev-shm-usage")
         chrome_options.add_argument("--window-size=1920,1080")
-        chrome_service = Service("/usr/bin/chromedriver")
+
+        if os.name == 'nt':  # Si el sistema operativo es Windows
+            chromedriver_path = "C:\\chromedriver-win64\\chromedriver.exe"
+        else:  # Si el sistema operativo es Linux (GitHub Actions)
+            chromedriver_path = "/usr/bin/chromedriver"
+
+        chrome_service = Service(chromedriver_path)
         self.driver = webdriver.Chrome(service=chrome_service, options=chrome_options)
         self.driver.maximize_window()  # Pone el navegador en tamaño completo
         self.vars = {}

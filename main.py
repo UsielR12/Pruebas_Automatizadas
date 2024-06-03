@@ -1,15 +1,16 @@
 import os
 import pytest
 
+
 def run_tests():
     # Define la ruta de la carpeta donde se encuentran las pruebas
-    tests_folder = os.path.abspath("Demo")
+    tests_folder = "Golive/Flujos/test_flujo_1.py"
 
     # Configura las opciones de pytest, como generar un reporte en formato junitxml
     # que puede ser utilizado para generar reportes HTML con herramientas como pytest-html.
     options = [
         tests_folder,
-        "--html=report.html",  # Generar un reporte html
+        "--html=reportprueba.html",  # Generar un reporte html
         "-v"  # Verboso, para mostrar información detallada sobre las pruebas
     ]
 
