@@ -24,7 +24,7 @@ jobs:
         pip install yagmail
 
     - name: Run tests
-      run: pytest /Golive/Flujos/test_flujo1.py --html=report.html
+      run: pytest Pruebas_Automatizadas/Golive/Flujos/test_flujo_1.py --html=report.html
 
     - name: Send email with report
       run: |
