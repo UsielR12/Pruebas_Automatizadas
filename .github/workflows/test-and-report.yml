@@ -27,8 +27,10 @@ jobs:
       run: ls -R
 
     - name: Run tests
-      run: pytest Pruebas_Automatizadas/Golive/Flujos/test_flujo_1.py --html=report.html
-
+      run: |
+        cd Golive/Flujos
+        pytest test_flujo1.py --html=../../report.html
+        
     - name: Send email with report
       run: |
         python send_email.py
