@@ -1,8 +1,7 @@
 name: Run Tests and Send Report
 
-on:
-  schedule:
-    - cron: '25 20 * * *' # Ejecutar a las 2 AM UTC diariamente
+on: push
+ 
 
 jobs:
   test:
