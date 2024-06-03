@@ -22,13 +22,16 @@ jobs:
         pip install pytest
         pip install pytest-html
         pip install yagmail
+        pip install selenium
         
     - name: List files
       run: ls -R
 
     - name: Run tests
-      run: pytest Pruebas_Automatizadas/Golive/Flujos/test_flujo_1.py --html=report.html
-
+      run: |
+        cd Golive/Flujos
+        pytest test_flujo_1.py --html=../../report.html
+        
     - name: Send email with report
       run: |
         python send_email.py
