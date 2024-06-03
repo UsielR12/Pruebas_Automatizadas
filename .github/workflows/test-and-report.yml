@@ -30,9 +30,7 @@ jobs:
       run: ls -R
 
     - name: Run tests
-      run: |
-        cd Golive/Flujos
-        pytest test_flujo_1.py --html=reportprueba.html
+      run: pytest main.py
 
     - name: Verify report generation
       run: ls -l reportprueba.html
