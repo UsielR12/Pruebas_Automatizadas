@@ -2,7 +2,7 @@ name: Run Tests and Send Report
 
 on:
   schedule:
-    - cron: '55 19 * * *' # Ejecutar a las 2 AM UTC diariamente
+    - cron: '05 20 * * *' # Ejecutar a las 2 AM UTC diariamente
 
 jobs:
   test:
