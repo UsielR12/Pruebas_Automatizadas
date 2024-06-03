@@ -9,11 +9,19 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
 
 
 class TestFlujo1():
     def setup_method(self, method):
-        self.driver = webdriver.Chrome()
+        chrome_options = Options()
+        chrome_options.add_argument("--headless")
+        chrome_options.add_argument("--no-sandbox")
+        chrome_options.add_argument("--disable-dev-shm-usage")
+        chrome_options.add_argument("--window-size=1920,1080")
+        chrome_service = Service("/usr/bin/chromedriver")
+        self.driver = webdriver.Chrome(service=chrome_service, options=chrome_options)
         self.driver.maximize_window()  # Pone el navegador en tamaño completo
         self.vars = {}
 
