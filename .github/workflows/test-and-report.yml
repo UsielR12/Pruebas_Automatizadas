@@ -41,3 +41,4 @@ jobs:
         EMAIL_USER: ${{ secrets.EMAIL_USER }}
         EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
         RECIPIENT:  ${{ secrets.RECIPIENT }}
+      
