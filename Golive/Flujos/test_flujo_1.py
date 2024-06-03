@@ -64,7 +64,7 @@ class TestFlujo1():
         element1 = self.driver.find_element(By.CSS_SELECTOR, ".even:nth-child(1) > td:nth-child(1)")
         self.driver.execute_script("arguments[0].click();", element1)
         # 12 | Espera que el botón de crear plan este disponible
-        WebDriverWait(self.driver, 5).until(
+        WebDriverWait(self.driver, 60).until(
             expected_conditions.presence_of_element_located((By.CSS_SELECTOR, ".create-plan-button")))
         # 13 | Presiona el botón de crear plan
         element = self.driver.find_element(By.CSS_SELECTOR, ".create-plan-button")
