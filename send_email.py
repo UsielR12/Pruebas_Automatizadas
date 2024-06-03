@@ -7,14 +7,13 @@ def send_email():
     recipient = os.environ['RECIPIENT']
     subject = "Informe de pruebas automatizadas"
     body = "Adjunto el informe de las pruebas ejecutadas."
-    filename = "report.html"
+    filename = "reportprueba.html"
 
     yag = yagmail.SMTP(user, password)
     yag.send(
         to=recipient,
         subject=subject,
-        contents=body,
-        attachments=filename,
+        contents=[body, yagmail.inline(filename)],
     )
 
 if __name__ == "__main__":
