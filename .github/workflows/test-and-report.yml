@@ -23,6 +23,8 @@ jobs:
         pip install pytest-html
         pip install yagmail
         pip install selenium
+        sudo apt-get update
+        sudo apt-get install -y chromium-browser
         
     - name: List files
       run: ls -R
