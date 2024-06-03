@@ -29,7 +29,7 @@ jobs:
     - name: Run tests
       run: |
         cd Golive/Flujos
-        pytest test_flujo1.py --html=../../report.html
+        pytest test_flujo_1.py --html=../../report.html
         
     - name: Send email with report
       run: |
