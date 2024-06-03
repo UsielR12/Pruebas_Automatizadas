@@ -33,6 +33,9 @@ jobs:
       run: |
         cd Golive/Flujos
         pytest test_flujo_1.py --html=reportprueba.html
+
+    - name: Verify report generation
+      run: ls -l reportprueba.html
         
     - name: Send email with report
       run: |
