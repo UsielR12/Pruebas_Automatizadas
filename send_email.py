@@ -1,5 +1,10 @@
 import os
-import yagmail
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.base import MIMEBase
+from email import encoders
+
 
 def send_email():
     user = os.environ['EMAIL_USER']
@@ -9,13 +14,33 @@ def send_email():
     body = "Adjunto el informe de las pruebas ejecutadas."
     filename = "reportprueba.html"
 
-    yag = yagmail.SMTP(user, password)
-    yag.send(
-        to=recipient,
-        subject=subject,
-        contents=[body, filename],
+    # Crear el contenedor del mensaje
+    msg = MIMEMultipart()
+    msg['From'] = user
+    msg['To'] = recipient
+    msg['Subject'] = subject
 
-    )
+    # Adjuntar el cuerpo del mensaje
+    msg.attach(MIMEText(body, 'plain'))
+
+    # Adjuntar el archivo
+    attachment = open(filename, "rb")
+
+    part = MIMEBase('application', 'octet-stream')
+    part.set_payload((attachment).read())
+    encoders.encode_base64(part)
+    part.add_header('Content-Disposition', "attachment; filename= %s" % filename)
+
+    msg.attach(part)
+
+    # Iniciar sesión en el servidor y enviar el correo
+    server = smtplib.SMTP('smtp.gmail.com', 587)
+    server.starttls()
+    server.login(user, password)
+    text = msg.as_string()
+    server.sendmail(user, recipient, text)
+    server.quit()
+
 
 if __name__ == "__main__":
     send_email()
