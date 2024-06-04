@@ -1,8 +1,7 @@
 name: Run Tests and Send Report
 
-on:
- schedule:
-    - cron: '0 17 * * *' # Ejecutar a las 2 AM UTC diariamente
+on: push
+ 
  
 
 jobs:
@@ -39,6 +38,7 @@ jobs:
       run: ls -l reportprueba.html
         
     - name: Send email with report
+      if: always()
       run: |
         python send_email.py
       env:
