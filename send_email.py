@@ -13,8 +13,8 @@ def send_email():
     yag.send(
         to=recipient,
         subject=subject,
-        contents=body,
-        attachments=filename,
+        contents=[body, filename],
+
     )
 
 if __name__ == "__main__":
