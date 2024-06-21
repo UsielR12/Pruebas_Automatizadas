@@ -23,18 +23,31 @@ class TestTestreinicioclientes():
     self.driver.quit()
   
   def test_testreinicioclientes(self):
+    # Test name: reinicio de clientes
+    # Primera parte: Crea plan de pago
+    # 1 | Abre el formulario de reinicio de cliente
     self.driver.get('https://4er2v88hf6.execute-api.us-east-1.amazonaws.com/pwa-reset-test-deals')
+    # 2 | Pone el navegador en pantalla completa
     self.driver.maximize_window()
+    # 3 | Hace una espera de 5 segundos
     time.sleep(5)
-    # Seleccionar la opción deseada en el list box por su valor
+    # 4 | Selecciona el listbox
     select = Select(self.driver.find_element(By.ID, "elementos"))
+    # 5 | Selecciona una opción del listbox según el index
+    # index 17 = PruebaCliente 1
+    # index 18 = PruebaCliente 2
+    # index 19 = PruebaCliente 3
+    # index 20 = PruebaCliente 4
     select.select_by_index(17)
-
+    # 6 | Selecciona el check list de reinicio de plan de pago
     self.driver.find_element(By.CSS_SELECTOR, ".radio-label:nth-child(3) span").click()
+    # 7 | Preciosa el botón de enviar para realizar la acción
     self.driver.find_element(By.CSS_SELECTOR, "button").click()
-
-    # Verificar el texto de la alerta
+    # 8 | Hace una espera de 5 segundos
     time.sleep(5)
+    # 9 | Espera que aparezca la alerta del navegador
     alert = self.driver.switch_to.alert
+    # 10 | Verifica que la alerta diga "Datos reiniciados correctamente"
     assert alert.text == "Datos reiniciados correctamente"
+    # 11 | Acepta la notificación
     alert.accept()

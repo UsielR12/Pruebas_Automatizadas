@@ -1,3 +1,4 @@
+import os
 import pytest
 import time
 import json
@@ -9,18 +10,31 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
 
-
-class Testflujocompleto2():
+class TestflujocompletoHL2():
     def setup_method(self, method):
-        self.driver = webdriver.Chrome()
+        chrome_options = Options()
+        chrome_options.add_argument("--headless")
+        chrome_options.add_argument("--no-sandbox")
+        chrome_options.add_argument("--disable-dev-shm-usage")
+        chrome_options.add_argument("--window-size=1920,1080")
+
+        if os.name == 'nt':  # Si el sistema operativo es Windows
+            chromedriver_path = "C:\\chromedriver-win64\\chromedriver.exe"
+        else:  # Si el sistema operativo es Linux (GitHub Actions)
+            chromedriver_path = "/usr/bin/chromedriver"
+
+        chrome_service = Service(chromedriver_path)
+        self.driver = webdriver.Chrome(service=chrome_service, options=chrome_options)
         self.driver.maximize_window()  # Pone el navegador en tamaño completo
         self.vars = {}
 
     def teardown_method(self, method):
         self.driver.quit()
 
-    def test_flujo_completo_2(self):
+    def test_flujo_completo_HL_2(self):
         # Test name: crear el perfil del cliente
         # Step # | name | target | value
         # 1 | open | http://concasa-preventa.s3-website-us-east-1.amazonaws.com/login |
@@ -248,6 +262,7 @@ class Testflujocompleto2():
         # 7 | click | css=.textPassword > .beginning-button |
         element = self.driver.find_element(By.CSS_SELECTOR, ".textPassword > .beginning-button")
         self.driver.execute_script("arguments[0].click();", element)
+        time.sleep(5)
         # 8 | waitForElementPresent | linkText=Aprobaciones | 30000
         WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located((By.XPATH, "//li[5]/a")))
         WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable((By.XPATH, "//li[5]/a")))

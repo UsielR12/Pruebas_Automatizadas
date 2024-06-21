@@ -1,3 +1,5 @@
+import os
+
 import pytest
 import time
 import json
@@ -9,18 +11,32 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
 
 
-class Testflujocompleto1():
+class TestflujocompletoHL1():
     def setup_method(self, method):
-        self.driver = webdriver.Chrome()
+        chrome_options = Options()
+        chrome_options.add_argument("--headless")
+        chrome_options.add_argument("--no-sandbox")
+        chrome_options.add_argument("--disable-dev-shm-usage")
+        chrome_options.add_argument("--window-size=1920,1080")
+
+        if os.name == 'nt':  # Si el sistema operativo es Windows
+            chromedriver_path = "C:\\chromedriver-win64\\chromedriver.exe"
+        else:  # Si el sistema operativo es Linux (GitHub Actions)
+            chromedriver_path = "/usr/bin/chromedriver"
+
+        chrome_service = Service(chromedriver_path)
+        self.driver = webdriver.Chrome(service=chrome_service, options=chrome_options)
         self.driver.maximize_window()  # Pone el navegador en tamaño completo
         self.vars = {}
 
     def teardown_method(self, method):
         self.driver.quit()
 
-    def test_flujo_completo_1(self):
+    def test_flujo_completo_HL_1(self):
 
         # El primer paso del flujo es crear el perfil del cliente.
         # 1 | Abre el módulo de clientes
