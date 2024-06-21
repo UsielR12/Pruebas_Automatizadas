@@ -190,7 +190,10 @@ class Testflujocompleto3():
         WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable((By.LINK_TEXT, "Gestión de ventas")))
         element = self.driver.find_element(By.LINK_TEXT, "Gestión de ventas")
         self.driver.execute_script("arguments[0].click();", element)
-
+        # .even:nth-child(1) > td:nth-child(1) = Cliente prueba 1
+        # .even:nth-child(2) > td:nth-child(1) = Cliente prueba 2
+        # .even:nth-child(3) > td:nth-child(1) = Cliente prueba 3
+        # .even:nth-child(4) > td:nth-child(1) = Cliente prueba 4
         # Selección del expediente que vamos a crearle un plan de pagos
         WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located(
             (By.CSS_SELECTOR, ".even:nth-child(3) > td:nth-child(3)")))  # el expediente que abrimos

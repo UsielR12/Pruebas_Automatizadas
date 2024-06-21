@@ -1,3 +1,4 @@
+import os
 import pytest
 import time
 import json
@@ -9,18 +10,32 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
 
 
-class Testflujocompleto2():
+class Testflujocompleto3():
     def setup_method(self, method):
-        self.driver = webdriver.Chrome()
+        chrome_options = Options()
+        chrome_options.add_argument("--headless")
+        chrome_options.add_argument("--no-sandbox")
+        chrome_options.add_argument("--disable-dev-shm-usage")
+        chrome_options.add_argument("--window-size=1920,1080")
+
+        if os.name == 'nt':  # Si el sistema operativo es Windows
+            chromedriver_path = "C:\\chromedriver-win64\\chromedriver.exe"
+        else:  # Si el sistema operativo es Linux (GitHub Actions)
+            chromedriver_path = "/usr/bin/chromedriver"
+
+        chrome_service = Service(chromedriver_path)
+        self.driver = webdriver.Chrome(service=chrome_service, options=chrome_options)
         self.driver.maximize_window()  # Pone el navegador en tamaño completo
         self.vars = {}
 
     def teardown_method(self, method):
         self.driver.quit()
 
-    def test_flujo_completo_2(self):
+    def test_flujo_completo_3(self):
         # Test name: crear el perfil del cliente
         # Step # | name | target | value
         # 1 | open | http://concasa-preventa.s3-website-us-east-1.amazonaws.com/login |
@@ -30,7 +45,7 @@ class Testflujocompleto2():
         # 3 | click | name=emaiI |
         self.driver.find_element(By.NAME, "emaiI").click()
         # 4 | type | name=emaiI | prueba.cliente1.concasahome@yopmail.com
-        self.driver.find_element(By.NAME, "emaiI").send_keys("prueba.cliente2.concasahome@yopmail.com")
+        self.driver.find_element(By.NAME, "emaiI").send_keys("prueba.cliente3.concasahome@yopmail.com")
         # 5 | click | name=passI |
         self.driver.find_element(By.NAME, "passI").click()
         # 6 | type | name=passI | 123456
@@ -196,90 +211,21 @@ class Testflujocompleto2():
         # .even:nth-child(4) > td:nth-child(1) = Cliente prueba 4
         # Selección del expediente que vamos a crearle un plan de pagos
         WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located(
-            (By.CSS_SELECTOR, ".even:nth-child(2) > td:nth-child(2)")))  # el expediente que abrimos
+            (By.CSS_SELECTOR, ".even:nth-child(3) > td:nth-child(3)")))  # el expediente que abrimos
         WebDriverWait(self.driver, 60).until(
-            EC.element_to_be_clickable((By.CSS_SELECTOR, ".even:nth-child(2) > td:nth-child(2)")))
-        element1 = self.driver.find_element(By.CSS_SELECTOR, ".even:nth-child(2) > td:nth-child(2)")
+            EC.element_to_be_clickable((By.CSS_SELECTOR, ".even:nth-child(3) > td:nth-child(3)")))
+        element1 = self.driver.find_element(By.CSS_SELECTOR, ".even:nth-child(3) > td:nth-child(3)")
         self.driver.execute_script("arguments[0].click();", element1)
 
-        WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located((By.CSS_SELECTOR, ".number-input-container")))
-        WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".number-input-container")))
-        self.driver.find_element(By.CSS_SELECTOR, ".number-input-container").clear()
-        element1 = self.driver.find_element(By.CSS_SELECTOR, ".number-input-container")
-        self.driver.execute_script("arguments[0].click();", element1)
-        self.driver.find_element(By.CSS_SELECTOR, ".number-input-container").send_keys(Keys.CONTROL + "a")
-        self.driver.find_element(By.CSS_SELECTOR, ".number-input-container").send_keys(Keys.BACKSPACE)
-
-        self.driver.find_element(By.CSS_SELECTOR, ".number-input-container").send_keys("15")
-        self.driver.find_element(By.CSS_SELECTOR, ".number-input-container").send_keys(Keys.ENTER)
-
-        WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located((By.CSS_SELECTOR, ".text-area-input-container")))
-        WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".text-area-input-container")))
-        element1 = self.driver.find_element(By.CSS_SELECTOR, ".text-area-input-container")
-        self.driver.execute_script("arguments[0].click();", element1)
-        self.driver.find_element(By.CSS_SELECTOR, ".text-area-input-container").send_keys("necesidad de más cuotas")
-
-        WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located((By.CSS_SELECTOR, ".send-to-aprove-button")))
-        WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".send-to-aprove-button")))
-        element1 = self.driver.find_element(By.CSS_SELECTOR, ".send-to-aprove-button")
-        self.driver.execute_script("arguments[0].click();", element1)
-
+        # Creamos el plan de pago
+        WebDriverWait(self.driver, 5).until(
+            expected_conditions.presence_of_element_located((By.CSS_SELECTOR, ".create-plan-button")))
+        element = self.driver.find_element(By.CSS_SELECTOR, ".create-plan-button")
+        self.driver.execute_script("arguments[0].click();", element)
         WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located((By.CSS_SELECTOR, ".swal2-confirm")))
         WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".swal2-confirm")))
-        element1 = self.driver.find_element(By.CSS_SELECTOR, ".swal2-confirm")
-        self.driver.execute_script("arguments[0].click();", element1)
-
-        # Test name: test_aprobar_plan_de_pago_SAF
-        # Step # | name | target | value
-        # 1 | open | http://concasa-financial-advisor.s3-website-us-east-1.amazonaws.com |
-        self.driver.get("http://concasa-financial-advisor.s3-website-us-east-1.amazonaws.com")
-        # 2 | setWindowSize | 1936x1056 |
-        self.driver.maximize_window()  # Pone el navegador en tamaño completo
-        # 3 | click | name=emaiI |
-        time.sleep(5)
-        WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located((By.NAME, "emaiI")))
-        WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable((By.NAME, "emaiI")))
-        element = self.driver.find_element(By.NAME, "emaiI")
+        element = self.driver.find_element(By.CSS_SELECTOR, ".swal2-confirm")
         self.driver.execute_script("arguments[0].click();", element)
-        # 4 | type | name=emaiI | usiel.ramirez@concasa.com
-        self.driver.find_element(By.NAME, "emaiI").send_keys("usiel.ramirez@concasa.com")
-        # 5 | click | name=passI |
-        element = self.driver.find_element(By.NAME, "passI")
-        self.driver.execute_script("arguments[0].click();", element)
-        # 6 | type | name=passI | 123456
-        self.driver.find_element(By.NAME, "passI").send_keys("123456")
-        # 7 | click | css=.textPassword > .beginning-button |
-        element = self.driver.find_element(By.CSS_SELECTOR, ".textPassword > .beginning-button")
-        self.driver.execute_script("arguments[0].click();", element)
-        # 8 | waitForElementPresent | linkText=Aprobaciones | 30000
-        WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located((By.XPATH, "//li[5]/a")))
-        WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable((By.XPATH, "//li[5]/a")))
-        # 9 | click | linkText=Aprobaciones |
-        element = self.driver.find_element(By.XPATH, "//li[5]/a")
-        self.driver.execute_script("arguments[0].click();", element)
-
-        # 10 | click | linkText=9091 | Aquí se selecciona el expediente que se va a aprobar
-        WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located((By.LINK_TEXT, "9921")))
-        WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable((By.LINK_TEXT, "9921")))
-        element = self.driver.find_element(By.LINK_TEXT, "9921")
-        self.driver.execute_script("arguments[0].click();", element)
-
-        # 11 | click | id=comment |
-        WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located((By.ID, "comment")))
-        WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable((By.ID, "comment")))
-        element = self.driver.find_element(By.ID, "comment")
-        self.driver.execute_script("arguments[0].click();", element)
-
-        # 12 | type | id=comment | es aceptable
-        self.driver.find_element(By.ID, "comment").send_keys("es aceptable")
-
-        element = self.driver.find_element(By.XPATH, "//button[2]")
-        self.driver.execute_script("arguments[0].click();", element)
-
-        WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable((By.XPATH, "//div[3]/button[2]")))
-        element = self.driver.find_element(By.XPATH, "//div[3]/button[2]")
-        self.driver.execute_script("arguments[0].click();", element)
-
 
         # Test name: test_aprobar_plan_de_pago_cliente
         # Step # | name | target | value
@@ -304,3 +250,124 @@ class Testflujocompleto2():
         self.driver.execute_script("arguments[0].click();", element)
 
         time.sleep(5)
+
+        # 1 | open | http://concasa-financial-advisor.s3-website-us-east-1.amazonaws.com/login |
+        self.driver.get("http://concasa-financial-advisor.s3-website-us-east-1.amazonaws.com/login")
+        # 2 | setWindowSize | fullsize |
+        self.driver.maximize_window()  # Pone el navegador en tamaño completo
+        # 3 | click | name=emaiI |
+        time.sleep(5)
+        WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located((By.NAME, "emaiI")))
+        WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable((By.NAME, "emaiI")))
+        self.driver.find_element(By.NAME, "emaiI").click()
+        # 4 | type | name=emaiI | usiel.ramirez@concasa.com
+        self.driver.find_element(By.NAME, "emaiI").send_keys("asesor.financiero.concasa@yopmail.com")
+        # 5 | type | name=passI | 123456
+        self.driver.find_element(By.NAME, "passI").send_keys("123456")
+        # 6 | click | css=.textPassword > .beginning-button |
+        self.driver.find_element(By.CSS_SELECTOR, ".textPassword > .beginning-button").click()
+        # 7 | mouseOver | css=.textPassword > .beginning-button |
+        element = self.driver.find_element(By.CSS_SELECTOR, ".textPassword > .beginning-button")
+        actions = ActionChains(self.driver)
+        actions.move_to_element(element).perform()
+        # 8 | mouseOut | css=.textPassword > .beginning-button |
+        element = self.driver.find_element(By.CSS_SELECTOR, "body")
+        actions = ActionChains(self.driver)
+        actions.move_to_element(element).perform()
+        # 9 | click | css=#dropdown-basic > .select-pwa |
+        # WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located((By.CSS_SELECTOR, "#dropdown-basic > .select-pwa")))
+        # WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "#dropdown-basic > .select-pwa")))
+        # element = self.driver.find_element(By.CSS_SELECTOR, "#dropdown-basic > .select-pwa")
+        # self.driver.execute_script("arguments[0].click();", element)
+
+        # 10 | click | css=.testingDDP |
+        # WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located((By.CSS_SELECTOR, ".testingDDP")))
+        # WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".testingDDP")))
+        # element = self.driver.find_element(By.CSS_SELECTOR, ".testingDDP")
+        # self.driver.execute_script("arguments[0].click();", element)
+        # 11 | click | id=root |
+        # self.driver.find_element(By.ID, "root").click()
+        # 12 | click | linkText=1382099100510 |
+        WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located((By.LINK_TEXT, "9931")))
+        WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable((By.LINK_TEXT, "9931")))
+        element = self.driver.find_element(By.LINK_TEXT, "9931")
+        self.driver.execute_script("arguments[0].click();", element)
+        # 13 | click | linkText=Plan de Pagos |
+        WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located((By.LINK_TEXT, "Plan de Pagos")))
+        WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable((By.LINK_TEXT, "Plan de Pagos")))
+        element = self.driver.find_element(By.LINK_TEXT, "Plan de Pagos")
+        self.driver.execute_script("arguments[0].click();", element)
+        # 14 | click | css=.aditional-payment-button span > span |
+        element = self.driver.find_element(By.CSS_SELECTOR, ".button-addClient")
+        self.driver.execute_script("arguments[0].click();", element)
+        # 15 | click | css=.text-input-modal-money |
+        WebDriverWait(self.driver, 60).until(
+            EC.visibility_of_element_located((By.CSS_SELECTOR, ".text-input-modal-money")))
+        WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".text-input-modal-money")))
+        element = self.driver.find_element(By.CSS_SELECTOR, ".text-input-modal-money")
+        self.driver.execute_script("arguments[0].click();", element)
+        # 16 | type | css=.text-input-modal-money | 500
+        self.driver.find_element(By.CSS_SELECTOR, ".text-input-modal-money").send_keys("750")
+        # 17 | click | css=.modal-section-container:nth-child(2) .text-input-modal |
+        WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located(
+            (By.CSS_SELECTOR, ".modal-section-container:nth-child(2) .text-input-modal")))
+        WebDriverWait(self.driver, 60).until(
+            EC.element_to_be_clickable((By.CSS_SELECTOR, ".modal-section-container:nth-child(2) .text-input-modal")))
+        element = self.driver.find_element(By.CSS_SELECTOR, ".modal-section-container:nth-child(2) .text-input-modal")
+        self.driver.execute_script("arguments[0].click();", element)
+        # 18 | type | css=.modal-section-container:nth-child(2) .text-input-modal | 123
+        self.driver.find_element(By.CSS_SELECTOR, ".modal-section-container:nth-child(2) .text-input-modal").send_keys(
+            "123")
+        # 19 | click | css=.modal-section-container:nth-child(3) .text-input-modal |
+        WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located(
+            (By.CSS_SELECTOR, ".modal-section-container:nth-child(3) .text-input-modal")))
+        WebDriverWait(self.driver, 60).until(
+            EC.element_to_be_clickable((By.CSS_SELECTOR, ".modal-section-container:nth-child(3) .text-input-modal")))
+        element = self.driver.find_element(By.CSS_SELECTOR, ".modal-section-container:nth-child(3) .text-input-modal")
+        self.driver.execute_script("arguments[0].click();", element)
+        # 20 | type | css=.modal-section-container:nth-child(3) .text-input-modal | 123
+        self.driver.find_element(By.CSS_SELECTOR, ".modal-section-container:nth-child(3) .text-input-modal").send_keys(
+            "1234")
+        # 21 | click | css=.form-check:nth-child(3) > .form-check-input |
+        WebDriverWait(self.driver, 60).until(
+            EC.visibility_of_element_located((By.CSS_SELECTOR, ".form-check:nth-child(3) > .form-check-input")))
+        WebDriverWait(self.driver, 60).until(
+            EC.element_to_be_clickable((By.CSS_SELECTOR, ".form-check:nth-child(3) > .form-check-input")))
+        element = self.driver.find_element(By.CSS_SELECTOR, ".form-check:nth-child(3) > .form-check-input")
+        self.driver.execute_script("arguments[0].click();", element)
+        # 22 | click | css=.modal-section-container > #comment |
+        WebDriverWait(self.driver, 60).until(
+            EC.visibility_of_element_located((By.CSS_SELECTOR, ".modal-section-container > #comment")))
+        WebDriverWait(self.driver, 60).until(
+            EC.element_to_be_clickable((By.CSS_SELECTOR, ".modal-section-container > #comment")))
+        element = self.driver.find_element(By.CSS_SELECTOR, ".modal-section-container > #comment")
+        self.driver.execute_script("arguments[0].click();", element)
+        # 23 | type | css=.modal-section-container > #comment | abc
+        self.driver.find_element(By.CSS_SELECTOR, ".modal-section-container > #comment").send_keys("abc")
+        # 24 | click | css=.large-modal-standard-button |
+        WebDriverWait(self.driver, 60).until(
+            EC.visibility_of_element_located((By.CSS_SELECTOR, ".large-modal-standard-button")))
+        WebDriverWait(self.driver, 60).until(
+            EC.element_to_be_clickable((By.CSS_SELECTOR, ".large-modal-standard-button")))
+        element = self.driver.find_element(By.CSS_SELECTOR, ".large-modal-standard-button")
+        self.driver.execute_script("arguments[0].click();", element)
+        # 25 | mouseOver | css=.large-modal-standard-button |
+        element = self.driver.find_element(By.CSS_SELECTOR, ".large-modal-standard-button")
+        actions = ActionChains(self.driver)
+        actions.move_to_element(element).perform()
+        # 26 | mouseOut | css=.large-modal-standard-button |
+        element = self.driver.find_element(By.CSS_SELECTOR, "body")
+        actions = ActionChains(self.driver)
+        actions.move_to_element(element).perform()
+
+        # Aquí se agrega la cuota pagada
+        # 27 | click | css=.accept-button |
+        WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located((By.CSS_SELECTOR, ".accept-button")))
+        WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".accept-button")))
+        element = self.driver.find_element(By.CSS_SELECTOR, ".accept-button")
+        self.driver.execute_script("arguments[0].click();", element)
+        # 28 | click | css=.swal-button |
+        WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located((By.CSS_SELECTOR, ".swal-button")))
+        WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".swal-button")))
+        element = self.driver.find_element(By.CSS_SELECTOR, ".swal-button")
+        self.driver.execute_script("arguments[0].click();", element)
