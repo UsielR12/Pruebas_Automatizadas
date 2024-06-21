@@ -1,9 +1,6 @@
 name: Run Tests and Send Report
 
-on:
-  schedule:
-    - cron: '0 7 * * *' # 1 AM Costa Rica time (UTC-6)
- 
+on: push
  
 
 jobs:
