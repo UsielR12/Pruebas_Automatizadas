@@ -1,6 +1,8 @@
 name: Prueba flujos Demo 1
 
-on: push
+on: 
+ schedule:
+    - cron: '0 8 * * *' # 2 AM Costa Rica time (UTC-6)
 
 jobs:
   test:
