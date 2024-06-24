@@ -14,7 +14,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 
 
-class Testflujocompleto3():
+class TestflujocompletoHL3():
     def setup_method(self, method):
         chrome_options = Options()
         chrome_options.add_argument("--headless")
@@ -35,7 +35,7 @@ class Testflujocompleto3():
     def teardown_method(self, method):
         self.driver.quit()
 
-    def test_flujo_completo_3(self):
+    def test_flujo_completo_HL_3(self):
         # Test name: crear el perfil del cliente
         # Step # | name | target | value
         # 1 | open | http://concasa-preventa.s3-website-us-east-1.amazonaws.com/login |
