@@ -2,7 +2,7 @@ name: Prueba flujos Demo 1
 
 on: 
  schedule:
-    - cron: '0 8 * * *' # 2 AM Costa Rica time (UTC-6)
+    - cron: '0 6 * * *' # 12 MD Costa Rica time (UTC-6)
 
 jobs:
   test:
