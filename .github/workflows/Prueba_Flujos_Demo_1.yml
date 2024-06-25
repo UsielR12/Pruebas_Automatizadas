@@ -1,6 +1,8 @@
 name: Prueba flujos Demo 1
 
-on: push
+on: 
+ schedule:
+    - cron: '0 6 * * *' # 12 MD Costa Rica time (UTC-6)
 
 jobs:
   test:
@@ -30,7 +32,7 @@ jobs:
 
     - name: Run tests
       run: |
-        pytest Demo/test_flujo_completo_HL_1.py Demo/test_flujo_completo_HL_2.py Demo/test_flujo_completo_HL_3.py Demo/test_flujo_completo_HL_4.py --html=reportprueba.html --self-contained-html
+        pytest Demo_HL/ --html=reportprueba.html --self-contained-html
 
     - name: Verify report generation
       run: ls -l reportprueba.html
