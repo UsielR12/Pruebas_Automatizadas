@@ -13,7 +13,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
-class TestTestreinicioclientes():
+class Testreinicioclientes():
   def setup_method(self, method):
     self.driver = webdriver.Chrome()
     self.driver.maximize_window()  # Pone el navegador en tamaño completo
@@ -22,7 +22,7 @@ class TestTestreinicioclientes():
   def teardown_method(self, method):
     self.driver.quit()
   
-  def test_testreinicioclientes(self):
+  def test_reinicioclientes(self):
     # Test name: reinicio de clientes
     # Primera parte: Crea plan de pago
     # 1 | Abre el formulario de reinicio de cliente
