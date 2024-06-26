@@ -211,9 +211,9 @@ class TestFlujo1():
         element = self.driver.find_element(By.CSS_SELECTOR, "div:nth-child(1) > .dropdown > #dModal-Toggle")
         self.driver.execute_script("arguments[0].click();", element)
         # 28 | Espera que el espacio de la lista de seleccionar banco este disponible
-        WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located((By.LINK_TEXT, "BCT-CRC")))
+        WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located((By.LINK_TEXT, "BCT-USD")))
         # 29 | Selecciona la opción del listbox de Seleccionar Banco
-        element = self.driver.find_element(By.LINK_TEXT, "BCT-CRC")
+        element = self.driver.find_element(By.LINK_TEXT, "BCT-USD")
         self.driver.execute_script("arguments[0].click();", element)
         # 30 | Espera que el espacio "Notas" este disponible
         WebDriverWait(self.driver, 60).until(

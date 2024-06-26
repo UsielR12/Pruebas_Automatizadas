@@ -346,8 +346,8 @@ class TestflujocompletoHL3():
         self.driver.execute_script("arguments[0].click();", element)
         # 28 | Selecciona la opción del listbox de Seleccionar Banco
         WebDriverWait(self.driver, 60).until(
-            EC.visibility_of_element_located((By.LINK_TEXT, "BCT-CRC")))
-        element = self.driver.find_element(By.LINK_TEXT, "BCT-CRC")
+            EC.visibility_of_element_located((By.LINK_TEXT, "BCT-USD")))
+        element = self.driver.find_element(By.LINK_TEXT, "BCT-USD")
         self.driver.execute_script("arguments[0].click();", element)
         # 22 | click | css=.modal-section-container > #comment |
         WebDriverWait(self.driver, 60).until(
