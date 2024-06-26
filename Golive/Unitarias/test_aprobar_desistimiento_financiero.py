@@ -57,27 +57,30 @@ class TestTestaprobardesistimientofinanciero():
     self.driver.execute_script("arguments[0].click();", element)
     # 14 | Espera que cargue
     time.sleep(5)
-    # 15 | Va la segunda página de los desistimientos
-    element = self.driver.find_element(By.CSS_SELECTOR, ".fade:nth-child(3) .pagination-button-pwa:nth-child(3)")
+    # 15 | Selecciona el filtro de los estados
+    element = self.driver.find_element(By.CSS_SELECTOR, "th:nth-child(7) #dropdown-basic")
     self.driver.execute_script("arguments[0].click();", element)
-    # 14 | Espera que el expediente que se quiere presionar este disponible
-    WebDriverWait(self.driver, 30).until(expected_conditions.presence_of_element_located((By.LINK_TEXT, "28")))
-    # 15 | Presiona el expediente que se a gestionar el desistimiento
-    element = self.driver.find_element(By.LINK_TEXT, "28")
+    # 16 | Selecciona el estado de pendiente
+    element = self.driver.find_element(By.ID, "3")
     self.driver.execute_script("arguments[0].click();", element)
-    # 16 | Espera que el botón de "Aprobar" este disponible
+    # 17 | Espera que el expediente que se quiere presionar este disponible
+    WebDriverWait(self.driver, 30).until(expected_conditions.presence_of_element_located((By.LINK_TEXT, "9911")))
+    # 18 | Presiona el expediente que se a gestionar el desistimiento
+    element = self.driver.find_element(By.LINK_TEXT, "9911")
+    self.driver.execute_script("arguments[0].click();", element)
+    # 19 | Espera que el botón de "Aprobar" este disponible
     WebDriverWait(self.driver, 30).until(expected_conditions.presence_of_element_located((By.CSS_SELECTOR, ".accept-button")))
-    # 17 | Presiona el botón de "Aprobar"
+    # 20 | Presiona el botón de "Aprobar"
     element = self.driver.find_element(By.CSS_SELECTOR, ".accept-button")
     self.driver.execute_script("arguments[0].click();", element)
-    # 18 | Espera que el botón de "Sí" este disponible del modal de aceptar desistimiento
+    # 21 | Espera que el botón de "Sí" este disponible del modal de aceptar desistimiento
     WebDriverWait(self.driver, 30).until(expected_conditions.presence_of_element_located((By.CSS_SELECTOR, ".actionsContainer > .accept-button")))
-    # 19 | Presiona el botón de "Sí" del modal de aceptar desistimiento
+    # 22 | Presiona el botón de "Sí" del modal de aceptar desistimiento
     element = self.driver.find_element(By.CSS_SELECTOR, ".actionsContainer > .accept-button")
     self.driver.execute_script("arguments[0].click();", element)
-    # 20 | Espera que el botón de "Ok" este disponible del modal de se realizó con exito el desistimiento
+    # 23 | Espera que el botón de "Ok" este disponible del modal de se realizó con exito el desistimiento
     WebDriverWait(self.driver, 30).until(expected_conditions.presence_of_element_located((By.CSS_SELECTOR, ".swal2-confirm")))
-    # 21 | Presiona el botón de "Ok" del modal de se realizó con exito el desistimiento
+    # 24 | Presiona el botón de "Ok" del modal de se realizó con exito el desistimiento
     element = self.driver.find_element(By.CSS_SELECTOR, ".swal2-confirm")
     self.driver.execute_script("arguments[0].click();", element)
 

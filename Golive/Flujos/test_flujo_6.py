@@ -314,13 +314,16 @@ class TestFlujo6():
         self.driver.execute_script("arguments[0].click();", element)
         # 14 | Espera que cargue
         time.sleep(5)
-        # 15 | Va la segunda página de los desistimientos
-        element = self.driver.find_element(By.CSS_SELECTOR, ".fade:nth-child(3) .pagination-button-pwa:nth-child(4)")
+        # 15 | Selecciona el filtro de los estados
+        element = self.driver.find_element(By.CSS_SELECTOR, "th:nth-child(7) #dropdown-basic")
+        self.driver.execute_script("arguments[0].click();", element)
+        # 16 | Selecciona el estado de pendiente
+        element = self.driver.find_element(By.ID, "3")
         self.driver.execute_script("arguments[0].click();", element)
         # 14 | Espera que el expediente que se quiere presionar este disponible
-        WebDriverWait(self.driver, 30).until(expected_conditions.presence_of_element_located((By.LINK_TEXT, "43")))
+        WebDriverWait(self.driver, 30).until(expected_conditions.presence_of_element_located((By.LINK_TEXT, "9911")))
         # 15 | Presiona el expediente que se a gestionar el desistimiento
-        element = self.driver.find_element(By.LINK_TEXT, "43")
+        element = self.driver.find_element(By.LINK_TEXT, "9911")
         self.driver.execute_script("arguments[0].click();", element)
         # 16 | Espera que el botón de "Aprobar" este disponible
         WebDriverWait(self.driver, 30).until(

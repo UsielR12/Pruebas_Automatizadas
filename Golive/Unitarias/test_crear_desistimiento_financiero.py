@@ -49,10 +49,10 @@ class TestTestcreardesistimientofinanciero():
     element = self.driver.find_element(By.CSS_SELECTOR, ".card-body:nth-child(1)")
     self.driver.execute_script("arguments[0].click();", element)
     # 11 | Espera que el expediente que se va a seleccionar este disponible
-    WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located((By.LINK_TEXT, "9921")))
-    WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable((By.LINK_TEXT, "9921")))
+    WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located((By.LINK_TEXT, "9911")))
+    WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable((By.LINK_TEXT, "9911")))
     # 12 | Presiona el expediente que se va a desistir
-    element = self.driver.find_element(By.LINK_TEXT, "9921")
+    element = self.driver.find_element(By.LINK_TEXT, "9911")
     self.driver.execute_script("arguments[0].click();", element)
     # 13 | Espera que la sección de "Información" del expediente cargue
     WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located((By.LINK_TEXT, "Información")))
