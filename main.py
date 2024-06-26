@@ -4,7 +4,7 @@ import pytest
 
 def run_tests():
     # Define la ruta de la carpeta donde se encuentran las pruebas
-    tests_folder = "Golive/Flujos/test_flujo_1.py"
+    tests_folder = "Golive/Flujos/test_flujo_HL_1.py"
 
     # Configura las opciones de pytest, como generar un reporte en formato junitxml
     # que puede ser utilizado para generar reportes HTML con herramientas como pytest-html.

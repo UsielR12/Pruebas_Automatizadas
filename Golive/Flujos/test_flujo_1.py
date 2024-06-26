@@ -1,3 +1,4 @@
+
 import os
 
 import pytest
@@ -17,19 +18,7 @@ from selenium.webdriver.chrome.options import Options
 
 class TestFlujo1():
     def setup_method(self, method):
-        chrome_options = Options()
-        chrome_options.add_argument("--headless")
-        chrome_options.add_argument("--no-sandbox")
-        chrome_options.add_argument("--disable-dev-shm-usage")
-        chrome_options.add_argument("--window-size=1920,1080")
-
-        if os.name == 'nt':  # Si el sistema operativo es Windows
-            chromedriver_path = "C:\\chromedriver-win64\\chromedriver.exe"
-        else:  # Si el sistema operativo es Linux (GitHub Actions)
-            chromedriver_path = "/usr/bin/chromedriver"
-
-        chrome_service = Service(chromedriver_path)
-        self.driver = webdriver.Chrome(service=chrome_service, options=chrome_options)
+        self.driver = webdriver.Chrome()
         self.driver.maximize_window()  # Pone el navegador en tamaño completo
         self.vars = {}
 
@@ -254,4 +243,3 @@ class TestFlujo1():
         element = self.driver.find_element(By.CSS_SELECTOR, ".swal-button")
         self.driver.execute_script("arguments[0].click();", element)
         time.sleep(3)
-

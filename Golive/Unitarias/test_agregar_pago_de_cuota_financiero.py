@@ -97,41 +97,43 @@ class TestTestagregarpagodecuotafinanciero():
     # 27 | Selecciona el espacio "Seleccionar Banco"
     element = self.driver.find_element(By.CSS_SELECTOR, "div:nth-child(1) > .dropdown > #dModal-Toggle")
     self.driver.execute_script("arguments[0].click();", element)
-    # 28 | Selecciona la opción del listbox de Seleccionar Banco
+    # 28 | Espera que el espacio de la lista de seleccionar banco este disponible
+    WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located((By.LINK_TEXT, "BCT-CRC")))
+    # 29 | Selecciona la opción del listbox de Seleccionar Banco
     element = self.driver.find_element(By.LINK_TEXT, "BCT-CRC")
     self.driver.execute_script("arguments[0].click();", element)
-    # 29 | Espera que el espacio "Notas" este disponible
+    # 30 | Espera que el espacio "Notas" este disponible
     WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located((By.CSS_SELECTOR, ".modal-section-container > #comment")))
     WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".modal-section-container > #comment")))
-    # 30 | Presiona el espacio "Notas"
+    # 31 | Presiona el espacio "Notas"
     element = self.driver.find_element(By.CSS_SELECTOR, ".modal-section-container > #comment")
     self.driver.execute_script("arguments[0].click();", element)
-    # 31 | Digita "abc" en el espacio "Notas"
+    # 32 | Digita "abc" en el espacio "Notas"
     self.driver.find_element(By.CSS_SELECTOR, ".modal-section-container > #comment").send_keys("abc")
-    # 32 | Espera que el botón "Registrar" esté disponible
+    # 33 | Espera que el botón "Registrar" esté disponible
     WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located((By.CSS_SELECTOR, ".large-modal-standard-button")))
     WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".large-modal-standard-button")))
-    # 33 | Presiona el botón "Registrar"
+    # 34 | Presiona el botón "Registrar"
     element = self.driver.find_element(By.CSS_SELECTOR, ".large-modal-standard-button")
     self.driver.execute_script("arguments[0].click();", element)
-    # 34 | Hace un mouseOver
+    # 35 | Hace un mouseOver
     element = self.driver.find_element(By.CSS_SELECTOR, ".large-modal-standard-button")
     actions = ActionChains(self.driver)
     actions.move_to_element(element).perform()
-    # 35 | Hace un mouseOut
+    # 36 | Hace un mouseOut
     element = self.driver.find_element(By.CSS_SELECTOR, "body")
     actions = ActionChains(self.driver)
     actions.move_to_element(element).perform()
-    # 36 | Espera que el botón de "Aceptar" este disponible
+    # 37 | Espera que el botón de "Aceptar" este disponible
     WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located((By.CSS_SELECTOR, ".accept-button")))
     WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".accept-button")))
-    # 37 | Presiona el botón "Aceptar"
+    # 38 | Presiona el botón "Aceptar"
     element = self.driver.find_element(By.CSS_SELECTOR, ".accept-button")
     self.driver.execute_script("arguments[0].click();", element)
-    # 38 | Espera el botón de "ok" del modal que se realizó con exito el registro
+    # 39 | Espera el botón de "ok" del modal que se realizó con exito el registro
     WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located((By.CSS_SELECTOR, ".swal-button")))
     WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".swal-button")))
-    # 39 | Presiona el botón "Ok"
+    # 40 | Presiona el botón "Ok"
     element = self.driver.find_element(By.CSS_SELECTOR, ".swal-button")
     self.driver.execute_script("arguments[0].click();", element)
     time.sleep(3)
