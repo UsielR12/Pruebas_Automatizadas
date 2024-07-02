@@ -31,6 +31,8 @@ class Testreinicioclientes():
     self.driver.maximize_window()
     # 3 | Hace una espera de 5 segundos
     time.sleep(5)
+
+    # Reinciar cliente 1
     # 4 | Selecciona el listbox
     select = Select(self.driver.find_element(By.ID, "elementos"))
     # 5 | Selecciona una opción del listbox según el index
@@ -40,7 +42,10 @@ class Testreinicioclientes():
     # index 20 = PruebaCliente 4
     select.select_by_index(17)
     # 6 | Selecciona el check list de reinicio de plan de pago
-    self.driver.find_element(By.CSS_SELECTOR, ".radio-label:nth-child(3) span").click()
+    # Reiniciar formulario de cliente = .radio-label:nth-child(1) span
+    # Reiniciar plan de pago = .radio-label:nth-child(3) span
+    # Reiniciar tod0 = .radio-label:nth-child(5) span
+    self.driver.find_element(By.CSS_SELECTOR, ".radio-label:nth-child(5) span").click()
     # 7 | Preciosa el botón de enviar para realizar la acción
     self.driver.find_element(By.CSS_SELECTOR, "button").click()
     # 8 | Hace una espera de 5 segundos
@@ -51,3 +56,4 @@ class Testreinicioclientes():
     assert alert.text == "Datos reiniciados correctamente"
     # 11 | Acepta la notificación
     alert.accept()
+

@@ -49,11 +49,11 @@ class TestFlujo4():
         # .even:nth-child(3) > td:nth-child(1) = Cliente prueba 3
         # .even:nth-child(4) > td:nth-child(1) = Cliente prueba 4
         WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located(
-            (By.CSS_SELECTOR, ".even:nth-child(1) > td:nth-child(1)")))  # el expediente que abrimos
+            (By.CSS_SELECTOR, ".even:nth-child(4) > td:nth-child(1)")))  # el expediente que abrimos
         WebDriverWait(self.driver, 60).until(
-            EC.element_to_be_clickable((By.CSS_SELECTOR, ".even:nth-child(1) > td:nth-child(1)")))
+            EC.element_to_be_clickable((By.CSS_SELECTOR, ".even:nth-child(4) > td:nth-child(1)")))
         # 11 | Presiona el expediente al que se va a crear el plan de pago
-        element1 = self.driver.find_element(By.CSS_SELECTOR, ".even:nth-child(1) > td:nth-child(1)")
+        element1 = self.driver.find_element(By.CSS_SELECTOR, ".even:nth-child(4) > td:nth-child(1)")
         self.driver.execute_script("arguments[0].click();", element1)
         # 12 | Espera que el espacio de cantidad de cuotas este disponible
         WebDriverWait(self.driver, 60).until(
@@ -119,10 +119,10 @@ class TestFlujo4():
         element = self.driver.find_element(By.XPATH, "//li[5]/a")
         self.driver.execute_script("arguments[0].click();", element)
         # 11 | Espera que el expediente que se va a aprobar esté disponible
-        WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located((By.LINK_TEXT, "9911")))
-        WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable((By.LINK_TEXT, "9911")))
+        WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located((By.LINK_TEXT, "9941")))
+        WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable((By.LINK_TEXT, "9941")))
         # 12 | Presiona el expediente para la aprobación
-        element = self.driver.find_element(By.LINK_TEXT, "9911")
+        element = self.driver.find_element(By.LINK_TEXT, "9941")
         self.driver.execute_script("arguments[0].click();", element)
         # 13 | Espera que el espacio de razón este disponible
         WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located((By.ID, "comment")))
@@ -160,7 +160,7 @@ class TestFlujo4():
         # 3 | Presiona el espacio de email
         self.driver.find_element(By.NAME, "emaiI").click()
         # 4 | Digita el email
-        self.driver.find_element(By.NAME, "emaiI").send_keys("prueba.cliente1.concasahome@yopmail.com")
+        self.driver.find_element(By.NAME, "emaiI").send_keys("prueba.cliente4.concasahome@yopmail.com")
         # 5 | Presiona el espacio de la contraseña
         self.driver.find_element(By.NAME, "passI").click()
         # 6 | Digita la contraseña
@@ -211,10 +211,10 @@ class TestFlujo4():
         actions = ActionChains(self.driver)
         actions.move_to_element(element).perform()
         # 10 | Espera que el expediente este visible en la pantalla
-        WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located((By.LINK_TEXT, "9911")))
-        WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable((By.LINK_TEXT, "9911")))
+        WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located((By.LINK_TEXT, "9941")))
+        WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable((By.LINK_TEXT, "9941")))
         # 11 | Presiona el expediente al que le va a agregar la cuota
-        element = self.driver.find_element(By.LINK_TEXT, "9911")
+        element = self.driver.find_element(By.LINK_TEXT, "9941")
         self.driver.execute_script("arguments[0].click();", element)
         # 12 | Espera que  la sesión plan de pagos este visible
         WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located((By.LINK_TEXT, "Plan de Pagos")))

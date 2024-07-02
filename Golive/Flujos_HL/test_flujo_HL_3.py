@@ -14,7 +14,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 
 
-class TestFlujo3():
+class TestFlujoHL3():
     def setup_method(self, method):
         chrome_options = Options()
         chrome_options.add_argument("--headless")
@@ -35,7 +35,7 @@ class TestFlujo3():
     def teardown_method(self, method):
         self.driver.quit()
 
-    def test_flujo_3(self):
+    def test_flujo_HL_3(self):
         # Test name: flujo 1
         # Primera parte: Crear plan de pago
         # 1 | Abre el módulo de Asesor de ventas
