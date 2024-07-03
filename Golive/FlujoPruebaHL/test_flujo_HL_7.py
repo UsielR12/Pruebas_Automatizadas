@@ -144,6 +144,7 @@ class TestFlujo7():
         # 23 | Presiona el botón de confirmar la creación de plan
         element = self.driver.find_element(By.CSS_SELECTOR, ".swal2-confirm")
         self.driver.execute_script("arguments[0].click();", element)
+        time.sleep(3)
 
         # segunda parte: aprobar plan de pago por el SAF
         # 1 | Abre el módulo de Asesor financiero
@@ -197,7 +198,6 @@ class TestFlujo7():
         # 20 | se cierra sesión
         element = self.driver.find_element(By.CSS_SELECTOR, ".ai-icon:nth-child(3)")
         self.driver.execute_script("arguments[0].click();", element)
-
         time.sleep(8)
 
 
@@ -229,6 +229,8 @@ class TestFlujo7():
         self.driver.execute_script("arguments[0].click();", element)
         time.sleep(5)
         # 11 | Presiona el botón para aproban plan de pagos
+        WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located((By.XPATH, "//div[5]/button")))
+        WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable((By.XPATH, "//div[5]/button")))
         element = self.driver.find_element(By.XPATH, "//div[5]/button")
         self.driver.execute_script("arguments[0].click();", element)
         # 12 | Presiona el botón de aceptar
