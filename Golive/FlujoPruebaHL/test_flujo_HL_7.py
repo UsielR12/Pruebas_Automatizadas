@@ -16,7 +16,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 
 
-class TestFlujo7():
+class TestFlujoHL7():
     def setup_method(self, method):
         chrome_options = Options()
         chrome_options.add_argument("--headless")
@@ -37,7 +37,7 @@ class TestFlujo7():
     def teardown_method(self, method):
         self.driver.quit()
 
-    def test_flujo_7(self):
+    def test_flujo_HL_7(self):
         # Test name: flujo 7
         # Parte cero: reinicio de cliente
 
