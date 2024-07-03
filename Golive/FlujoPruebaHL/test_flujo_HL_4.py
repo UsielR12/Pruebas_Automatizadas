@@ -192,6 +192,7 @@ class TestFlujoHL4():
         element = self.driver.find_element(By.XPATH, "//li[2]/a/span")
         self.driver.execute_script("arguments[0].click();", element)
         # 11 | Presiona el botón para aproban plan de pagos
+        time.sleep(5)
         element = self.driver.find_element(By.XPATH, "//div[5]/button")
         self.driver.execute_script("arguments[0].click();", element)
         # 12 | Presiona el botón de aceptar

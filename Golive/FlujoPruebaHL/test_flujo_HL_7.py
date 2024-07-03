@@ -227,6 +227,7 @@ class TestFlujo7():
         # 10 | Presiona el hipervinculo para ir al plan de pago
         element = self.driver.find_element(By.XPATH, "//li[2]/a/span")
         self.driver.execute_script("arguments[0].click();", element)
+        time.sleep(5)
         # 11 | Presiona el botón para aproban plan de pagos
         element = self.driver.find_element(By.XPATH, "//div[5]/button")
         self.driver.execute_script("arguments[0].click();", element)

@@ -191,9 +191,11 @@ class TestFlujoHL4():
         # 10 | Presiona el hipervinculo para ir al plan de pago
         element = self.driver.find_element(By.XPATH, "//li[2]/a/span")
         self.driver.execute_script("arguments[0].click();", element)
+        time.sleep(5)
         # 11 | Presiona el botón para aproban plan de pagos
         element = self.driver.find_element(By.XPATH, "//div[5]/button")
         self.driver.execute_script("arguments[0].click();", element)
+
         # 12 | Presiona el botón de aceptar
         element = self.driver.find_element(By.CSS_SELECTOR, ".accept-button")
         self.driver.execute_script("arguments[0].click();", element)
