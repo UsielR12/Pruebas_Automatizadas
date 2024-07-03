@@ -168,6 +168,7 @@ class TestreinicioclientesHL():
     # 10 | Presiona el botón de persona
     self.driver.find_element(By.XPATH, "//button").click()
     # 11 | Presiona tipo de identificación
+    time.sleep(2)
     self.driver.find_element(By.CSS_SELECTOR, ".css-1t5ue5z").click()
     # 12 | Selecciona el tipo de identificación "Nacional"
     self.driver.find_element(By.XPATH, "//section/div/div/div[2]/div/div").click()
@@ -331,6 +332,7 @@ class TestreinicioclientesHL():
     # 10 | Presiona el botón de persona
     self.driver.find_element(By.XPATH, "//button").click()
     # 11 | Presiona tipo de identificación
+    time.sleep(2)
     self.driver.find_element(By.CSS_SELECTOR, ".css-1t5ue5z").click()
     # 12 | Selecciona el tipo de identificación "Nacional"
     self.driver.find_element(By.XPATH, "//section/div/div/div[2]/div/div").click()
@@ -494,6 +496,7 @@ class TestreinicioclientesHL():
     # 10 | Presiona el botón de persona
     self.driver.find_element(By.XPATH, "//button").click()
     # 11 | Presiona tipo de identificación
+    time.sleep(2)
     self.driver.find_element(By.CSS_SELECTOR, ".css-1t5ue5z").click()
     # 12 | Selecciona el tipo de identificación "Nacional"
     self.driver.find_element(By.XPATH, "//section/div/div/div[2]/div/div").click()
