@@ -227,11 +227,4 @@ class TestreinicioclientesHL():
     self.driver.find_element(By.CSS_SELECTOR, ".d-flex:nth-child(5) > .font-lato").click()
     # Una espera de 5 segundos para que se cree el perfil
     time.sleep(5)
-    # 28 | Presiona el botón de perfil
-    element = self.driver.find_element(By.CSS_SELECTOR, ".c-pointer")
-    self.driver.execute_script("arguments[0].click();", element)
-    # 29 | Presiona el botón de cerrar sesión
-    element = self.driver.find_element(By.CSS_SELECTOR, ".ai-icon:nth-child(3)")
-    self.driver.execute_script("arguments[0].click();", element)
-    # 30 | hace una espera de 8 segundos
-    time.sleep(8)
+
