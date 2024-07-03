@@ -1,7 +1,9 @@
 name: Prueba flujos GoLive 1
 
 on: 
- push
+ schedule:
+    - cron: '0 8 * * *' # 2 am Costa Rica time (UTC-6)
+
 
 jobs:
   test:
