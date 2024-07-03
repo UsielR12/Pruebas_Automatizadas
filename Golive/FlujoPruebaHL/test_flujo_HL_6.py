@@ -288,6 +288,7 @@ class TestFlujoHL6():
         # 17 | Presiona el combobox de "seleccionar razón"
         element = self.driver.find_element(By.CSS_SELECTOR, ".modal-section-container #dModal-Toggle")
         self.driver.execute_script("arguments[0].click();", element)
+        time.sleep(3)
         # 18 | Presiona la razón del desistimiento
         element = self.driver.find_element(By.LINK_TEXT, "Capacidad de pago insuficiente")
         self.driver.execute_script("arguments[0].click();", element)
