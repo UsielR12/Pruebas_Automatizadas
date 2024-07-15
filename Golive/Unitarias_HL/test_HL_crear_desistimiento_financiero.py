@@ -64,6 +64,10 @@ class TestTestcreardesistimientofinanciero():
     element = self.driver.find_element(By.CSS_SELECTOR, ".card-body:nth-child(1)")
     self.driver.execute_script("arguments[0].click();", element)
     # 11 | Espera que el expediente que se va a seleccionar este disponible
+    # 9911: Cliente 1
+    # 9921: Cliente 2
+    # 9931: Cliente 3
+    # 9941: Cliente 4
     WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located((By.LINK_TEXT, "9911")))
     WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable((By.LINK_TEXT, "9911")))
     # 12 | Presiona el expediente que se va a desistir
@@ -86,6 +90,7 @@ class TestTestcreardesistimientofinanciero():
     # 17 | Presiona el combobox de "seleccionar razón"
     element = self.driver.find_element(By.CSS_SELECTOR, ".modal-section-container #dModal-Toggle")
     self.driver.execute_script("arguments[0].click();", element)
+    time.sleep(3)
     # 18 | Presiona la razón del desistimiento
     element = self.driver.find_element(By.LINK_TEXT, "Capacidad de pago insuficiente")
     self.driver.execute_script("arguments[0].click();", element)
