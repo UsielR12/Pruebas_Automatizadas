@@ -1,8 +1,7 @@
 name: Prueba flujos Demo 1
 
 on: 
- schedule:
-    - cron: '0 6 * * *' # 12 MD Costa Rica time (UTC-6)
+  workflow_dispatch:
 
 jobs:
   test:
