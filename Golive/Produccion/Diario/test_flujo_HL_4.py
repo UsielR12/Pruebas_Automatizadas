@@ -121,6 +121,7 @@ class TestFlujoHL4():
         # 16 | Presiona la tecla Enter
         self.driver.find_element(By.CSS_SELECTOR, ".number-input-container").send_keys(Keys.ENTER)
         # 17 | Espera que el area de notas este disponible
+        time.sleep(5)
         WebDriverWait(self.driver, 60).until(
             EC.visibility_of_element_located((By.CSS_SELECTOR, ".text-area-input-container")))
         WebDriverWait(self.driver, 60).until(
