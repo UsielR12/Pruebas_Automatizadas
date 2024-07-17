@@ -207,7 +207,7 @@ class Testflujocompleto4():
         self.driver.find_element(By.CSS_SELECTOR, ".number-input-container").send_keys(Keys.CONTROL + "a")
         self.driver.find_element(By.CSS_SELECTOR, ".number-input-container").send_keys(Keys.BACKSPACE)
 
-        self.driver.find_element(By.CSS_SELECTOR, ".number-input-container").send_keys("15")
+        self.driver.find_element(By.CSS_SELECTOR, ".number-input-container").send_keys("26")
         self.driver.find_element(By.CSS_SELECTOR, ".number-input-container").send_keys(Keys.ENTER)
 
         WebDriverWait(self.driver, 60).until(EC.visibility_of_element_located((By.CSS_SELECTOR, ".text-area-input-container")))

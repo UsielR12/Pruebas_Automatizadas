@@ -82,7 +82,7 @@ class TestFlujoHL4():
         self.driver.find_element(By.CSS_SELECTOR, ".number-input-container").send_keys(Keys.CONTROL + "a")
         self.driver.find_element(By.CSS_SELECTOR, ".number-input-container").send_keys(Keys.BACKSPACE)
         # 15 | Digita la cantidad de cuotas que quiere
-        self.driver.find_element(By.CSS_SELECTOR, ".number-input-container").send_keys("15")
+        self.driver.find_element(By.CSS_SELECTOR, ".number-input-container").send_keys("26")
         # 16 | Presiona la tecla Enter
         self.driver.find_element(By.CSS_SELECTOR, ".number-input-container").send_keys(Keys.ENTER)
         # 17 | Espera que el area de notas este disponible
