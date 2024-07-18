@@ -1,11 +1,7 @@
 name: Golive Quincenal
 
 on: 
- schedule:
-    # Ejecutar el primer y tercer domingo del mes a las 11:35 PM hora de Costa Rica (UTC-6)
-    - cron: '35 5 1-7 * 0' # Primer domingo del mes
-    - cron: '35 5 15-21 * 0' # Tercer domingo del mes
-
+ workflow_dispatch:
 
 jobs:
   test:
@@ -29,6 +25,18 @@ jobs:
         pip install selenium
         sudo apt-get update
         sudo apt-get install -y chromium-browser chromium-chromedriver
+
+    - name: Verify day is first or third Sunday
+      run: |
+        DAY=$(date +'%d')
+        if [[ $DAY -ge 1 && $DAY -le 7 ]]; then
+          echo "First Sunday of the month"
+        elif [[ $DAY -ge 15 && $DAY -le 21 ]]; then
+          echo "Third Sunday of the month"
+        else
+          echo "Not the first or third Sunday of the month"
+          exit 1
+        fi
 
     - name: List files
       run: ls -R
