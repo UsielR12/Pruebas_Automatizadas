@@ -1,16 +1,16 @@
 import os
 import smtplib
+import sys
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email import encoders
 
 
-def send_email():
+def send_email(subject):
     user = os.environ['EMAIL_USER']
     password = os.environ['EMAIL_PASS']
     recipient = os.environ['RECIPIENT']
-    subject = "Informe de pruebas automatizadas"
     body = "Adjunto el informe de las pruebas ejecutadas."
     filename = "reportprueba.html"
 
@@ -43,4 +43,9 @@ def send_email():
 
 
 if __name__ == "__main__":
-    send_email()
+    if len(sys.argv) != 2:
+        print("Usage: send_email.py <subject>")
+        sys.exit(1)
+
+    subject = sys.argv[1]
+    send_email(subject)
