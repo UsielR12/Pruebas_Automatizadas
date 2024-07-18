@@ -1,9 +1,7 @@
 name: Golive Quincenal
 
 on: 
- schedule:
-    # Ejecutar todos los domingos del mes a las 11:35 PM hora de Costa Rica (UTC-6)
-    - cron: '35 5 * * 0'
+ workflow_dispatch:
 
 jobs:
   test:
