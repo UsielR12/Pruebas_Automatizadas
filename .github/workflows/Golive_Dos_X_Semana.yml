@@ -45,4 +45,4 @@ jobs:
       env:
         EMAIL_USER: ${{ secrets.EMAIL_USER }}
         EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
-        RECIPIENT: ${{ secrets.RECIPIENTS }}
+        RECIPIENTS: ${{ secrets.RECIPIENTS }}
