@@ -1,8 +1,8 @@
 name: Golive Semanal
 
 on: 
- workflow_dispatch:
-
+   schedule:
+    - cron: '50 5 * * 0' # 11:35 PM Costa Rica time (UTC-6) cada domingo
 
 jobs:
   test:
