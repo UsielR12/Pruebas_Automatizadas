@@ -1,8 +1,7 @@
 name: Golive Diario
 
 on: 
- schedule:
-    - cron: '30 5 * * *' # 11:30 pm Costa Rica time (UTC-6)
+ workflow_dispatch:
 
 
 jobs:
@@ -45,4 +44,4 @@ jobs:
       env:
         EMAIL_USER: ${{ secrets.EMAIL_USER }}
         EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
-        RECIPIENT: ${{ secrets.RECIPIENT }}
+        RECIPIENT: ${{ secrets.RECIPIENTS }}
