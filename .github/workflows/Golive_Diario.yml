@@ -2,7 +2,7 @@ name: Golive Diario
 
 on: 
  schedule:
-    - cron: '30 5 * * *' # 11:30 pm Costa Rica time (UTC-6)
+    - cron: '16 15 * * *' # 11:30 pm Costa Rica time (UTC-6)
 
 
 jobs:
