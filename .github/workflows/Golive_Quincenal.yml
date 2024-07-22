@@ -3,8 +3,8 @@ name: Golive Quincenal
 on: 
  schedule:
     # Ejecutar el primer y tercer lunes del mes a las 11:35 PM hora de Costa Rica (UTC-6)
-    - cron: '35 5 2-8 * 2' # Primer lunes del mes (equivalente a 05:35 AM UTC del primer martes)
-    - cron: '35 5 16-23 * 2' # Tercer lunes del mes (equivalente a 05:35 AM UTC del tercer martes)
+    - cron: '50 5 2-8 * 2' # Primer lunes del mes (equivalente a 05:35 AM UTC del primer martes)
+    - cron: '50 5 16-23 * 2' # Tercer lunes del mes (equivalente a 05:35 AM UTC del tercer martes)
 
 jobs:
   test:
