@@ -2,9 +2,9 @@ name: Golive Quincenal
 
 on: 
  schedule:
-    # Ejecutar el primer y tercer lunes del mes a las 11:35 PM hora de Costa Rica (UTC-6)
-    - cron: '50 5 2-8 * 2' # Primer lunes del mes (equivalente a 05:35 AM UTC del primer martes)
-    - cron: '50 5 16-23 * 2' # Tercer lunes del mes (equivalente a 05:35 AM UTC del tercer martes)
+    # Ejecutar el primer y tercer domingo del mes a las 11:50 PM hora de Costa Rica (UTC-6)
+    - cron: '50 5 1-7 * 1' # Primer domingo del mes (11:50 PM hora de Costa Rica)
+    - cron: '50 5 15-21 * 1' # Tercer domingo del mes (11:50 PM hora de Costa Rica)
 
 jobs:
   test:
@@ -32,9 +32,14 @@ jobs:
     - name: Verify day is first or third Monday
       run: |
         DAY=$(date +'%d')
-        if [[ $DAY -ge 2 && $DAY -le 8 ]]; then
+        WEEKDAY=$(date +'%u')
+        if [[ $WEEKDAY -ne 1 ]]; then
+          echo "Today is not Monday"
+          exit 1
+        fi
+        if [[ $DAY -ge 1 && $DAY -le 7 ]]; then
           echo "First Monday of the month"
-        elif [[ $DAY -ge 16 && $DAY -le 23 ]]; then
+        elif [[ $DAY -ge 15 && $DAY -le 21 ]]; then
           echo "Third Monday of the month"
         else
           echo "Not the first or third Monday of the month"
