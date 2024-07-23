@@ -2,7 +2,7 @@ name: Golive Semanal
 
 on: 
    schedule:
-    - cron: '0 6 * * 2' # 11:35 PM Costa Rica time (UTC-6) cada domingo
+    - cron: '0 6 * * 1' # 11:35 PM Costa Rica time (UTC-6) cada domingo
 
 jobs:
   test:
