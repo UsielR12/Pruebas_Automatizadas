@@ -16,7 +16,7 @@ def send_email(subject):
     password = os.environ['EMAIL_PASS']
     recipients = os.environ['RECIPIENTS'].split(",")
     body = "Adjunto el informe de las pruebas ejecutadas."
-    input_html = "reportprueba (66).html"
+    input_html = "reportprueba.html"
     output_pdf = "reportprueba.pdf"
 
     # Convertir el archivo HTML a PDF
