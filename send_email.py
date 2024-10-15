@@ -1,36 +1,26 @@
 import os
 import smtplib
 import sys
-import pdfkit
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email import encoders
+from weasyprint import HTML
 
 def convert_html_to_pdf(input_html, output_pdf):
-    """Convierte un archivo HTML en un PDF."""
-    try:
-        pdfkit.from_file(input_html, output_pdf)
-        print(f"Archivo PDF generado: {output_pdf}")
-    except Exception as e:
-        print(f"Error al convertir HTML a PDF: {e}")
-        sys.exit(1)
+    """Convierte un archivo HTML en PDF usando WeasyPrint."""
+    HTML(input_html).write_pdf(output_pdf)
 
 def send_email(subject):
     user = os.environ['EMAIL_USER']
     password = os.environ['EMAIL_PASS']
     recipients = os.environ['RECIPIENTS'].split(",")
     body = "Adjunto el informe de las pruebas ejecutadas."
-    input_html = "reportprueba.html"
+    input_html = "reportprueba (66).html"
     output_pdf = "reportprueba.pdf"
 
     # Convertir el archivo HTML a PDF
     convert_html_to_pdf(input_html, output_pdf)
-
-    # Verificar si el PDF se generó correctamente antes de enviar el correo
-    if not os.path.exists(output_pdf):
-        print(f"El archivo PDF no fue encontrado: {output_pdf}")
-        sys.exit(1)
 
     # Crear el contenedor del mensaje
     msg = MIMEMultipart()
@@ -59,7 +49,7 @@ def send_email(subject):
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        print("Usage: send_email.py <subject>")
+        print("Uso: send_email.py <asunto>")
         sys.exit(1)
 
     subject = sys.argv[1]
