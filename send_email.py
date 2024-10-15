@@ -1,17 +1,36 @@
 import os
 import smtplib
 import sys
+import pdfkit
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email import encoders
+
+def convert_html_to_pdf(input_html, output_pdf):
+    """Convierte un archivo HTML en un PDF."""
+    try:
+        pdfkit.from_file(input_html, output_pdf)
+        print(f"Archivo PDF generado: {output_pdf}")
+    except Exception as e:
+        print(f"Error al convertir HTML a PDF: {e}")
+        sys.exit(1)
 
 def send_email(subject):
     user = os.environ['EMAIL_USER']
     password = os.environ['EMAIL_PASS']
     recipients = os.environ['RECIPIENTS'].split(",")
     body = "Adjunto el informe de las pruebas ejecutadas."
-    filename = "reportprueba.html"
+    input_html = "reportprueba.html"
+    output_pdf = "reportprueba.pdf"
+
+    # Convertir el archivo HTML a PDF
+    convert_html_to_pdf(input_html, output_pdf)
+
+    # Verificar si el PDF se generó correctamente antes de enviar el correo
+    if not os.path.exists(output_pdf):
+        print(f"El archivo PDF no fue encontrado: {output_pdf}")
+        sys.exit(1)
 
     # Crear el contenedor del mensaje
     msg = MIMEMultipart()
@@ -22,12 +41,12 @@ def send_email(subject):
     # Adjuntar el cuerpo del mensaje
     msg.attach(MIMEText(body, 'plain'))
 
-    # Adjuntar el archivo
-    with open(filename, "rb") as attachment:
+    # Adjuntar el archivo PDF
+    with open(output_pdf, "rb") as attachment:
         part = MIMEBase('application', 'octet-stream')
         part.set_payload(attachment.read())
         encoders.encode_base64(part)
-        part.add_header('Content-Disposition', "attachment; filename= %s" % filename)
+        part.add_header('Content-Disposition', f"attachment; filename= {output_pdf}")
         msg.attach(part)
 
     # Iniciar sesión en el servidor y enviar el correo
