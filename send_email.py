@@ -1,22 +1,33 @@
 import os
 import smtplib
-import sys
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email import encoders
-from weasyprint import HTML
+from playwright.sync_api import sync_playwright
 
 def convert_html_to_pdf(input_html, output_pdf):
-    """Convierte un archivo HTML en PDF usando WeasyPrint."""
-    HTML(input_html).write_pdf(output_pdf)
+    """Convierte un archivo HTML en PDF usando Playwright."""
+    with sync_playwright() as p:
+        browser = p.chromium.launch()
+        page = browser.new_page()
+
+        # Cargar el contenido HTML
+        with open(input_html, 'r') as file:
+            html_content = file.read()
+
+        page.set_content(html_content)
+
+        # Generar el PDF
+        page.pdf(path=output_pdf, format='A4', print_background=True)
+        browser.close()
 
 def send_email(subject):
     user = os.environ['EMAIL_USER']
     password = os.environ['EMAIL_PASS']
     recipients = os.environ['RECIPIENTS'].split(",")
     body = "Adjunto el informe de las pruebas ejecutadas."
-    input_html = "reportprueba.html"
+    input_html = "reportprueba (66).html"
     output_pdf = "reportprueba.pdf"
 
     # Convertir el archivo HTML a PDF
@@ -48,9 +59,5 @@ def send_email(subject):
     server.quit()
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("Uso: send_email.py <asunto>")
-        sys.exit(1)
-
-    subject = sys.argv[1]
+    subject = "Reporte de pruebas"
     send_email(subject)
