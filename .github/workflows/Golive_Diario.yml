@@ -48,3 +48,5 @@ jobs:
         EMAIL_USER: ${{ secrets.EMAIL_USER }}
         EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
         RECIPIENTS: ${{ secrets.RECIPIENTS }}
+        PDFCROWD_USER: ${{ secrets.PDFCROWD_USER }}
+        PDFCROWD_API_KEY: ${{ secrets.PDFCROWD_API_KEY }}
