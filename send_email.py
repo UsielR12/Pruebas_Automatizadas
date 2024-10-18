@@ -1,30 +1,31 @@
 import os
 import smtplib
+import pdfcrowd
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email import encoders
-from playwright.sync_api import sync_playwright
+
 
 def convert_html_to_pdf(input_html, output_pdf):
-    """Convierte un archivo HTML en PDF usando Playwright, asegurándose de que el contenido dinámico se cargue."""
-    with sync_playwright() as p:
-        browser = p.chromium.launch()
-        page = browser.new_page()
+    """Convierte un archivo HTML a PDF usando la API de PDFCrowd."""
+    try:
+        # Crear el cliente de conversión
+        client = pdfcrowd.HtmlToPdfClient(os.environ['Usiel'], os.environ['326a0e80e888dbea379ca8e66eb926c6'])
 
-        # Cargar el contenido HTML
+        # Leer el contenido del archivo HTML
         with open(input_html, 'r') as file:
             html_content = file.read()
 
-        page.set_content(html_content)
+        # Convertir el contenido HTML a PDF
+        with open(output_pdf, 'wb') as output_file:
+            client.convertStringToFile(html_content, output_pdf)
 
-        # Esperar a que todos los elementos y scripts se carguen (puedes ajustar el timeout si es necesario)
-        page.wait_for_load_state('networkidle')  # Espera a que no haya más tráfico de red (carga de JS)
+        print("PDF generado correctamente.")
+    except pdfcrowd.Error as e:
+        print(f"Error durante la conversión a PDF: {e}")
+        raise
 
-        # Generar el PDF con todos los detalles
-        page.pdf(path=output_pdf, format='A4', print_background=True)
-
-        browser.close()
 
 def send_email(subject):
     user = os.environ['EMAIL_USER']
@@ -61,6 +62,7 @@ def send_email(subject):
     text = msg.as_string()
     server.sendmail(user, recipients, text)
     server.quit()
+
 
 if __name__ == "__main__":
     subject = "Reporte de pruebas"
