@@ -11,7 +11,7 @@ def convert_html_to_pdf(input_html, output_pdf):
     """Convierte un archivo HTML a PDF usando la API de PDFCrowd."""
     try:
         # Crear el cliente de conversión
-        client = pdfcrowd.HtmlToPdfClient(os.environ['Usiel'], os.environ['326a0e80e888dbea379ca8e66eb926c6'])
+        client = pdfcrowd.HtmlToPdfClient(os.environ['PDFCROWD_USER'], os.environ['PDFCROWD_API_KEY'])
 
         # Leer el contenido del archivo HTML
         with open(input_html, 'r') as file:
