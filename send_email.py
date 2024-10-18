@@ -7,7 +7,7 @@ from email import encoders
 from playwright.sync_api import sync_playwright
 
 def convert_html_to_pdf(input_html, output_pdf):
-    """Convierte un archivo HTML en PDF usando Playwright."""
+    """Convierte un archivo HTML en PDF usando Playwright, asegurándose de que el contenido dinámico se cargue."""
     with sync_playwright() as p:
         browser = p.chromium.launch()
         page = browser.new_page()
@@ -18,8 +18,12 @@ def convert_html_to_pdf(input_html, output_pdf):
 
         page.set_content(html_content)
 
-        # Generar el PDF
+        # Esperar a que todos los elementos y scripts se carguen (puedes ajustar el timeout si es necesario)
+        page.wait_for_load_state('networkidle')  # Espera a que no haya más tráfico de red (carga de JS)
+
+        # Generar el PDF con todos los detalles
         page.pdf(path=output_pdf, format='A4', print_background=True)
+
         browser.close()
 
 def send_email(subject):
@@ -27,7 +31,7 @@ def send_email(subject):
     password = os.environ['EMAIL_PASS']
     recipients = os.environ['RECIPIENTS'].split(",")
     body = "Adjunto el informe de las pruebas ejecutadas."
-    input_html = "reportprueba.html"
+    input_html = "reportprueba (66).html"
     output_pdf = "reportprueba.pdf"
 
     # Convertir el archivo HTML a PDF
