@@ -1,53 +1,50 @@
 import os
 import smtplib
-import pdfcrowd
+import requests
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email import encoders
 
 
-def convert_html_to_pdf(input_html, output_pdf):
-    """Convierte un archivo HTML a PDF usando la API de PDFCrowd."""
-    try:
-        # Crear el cliente de conversión
-        client = pdfcrowd.HtmlToPdfClient(os.environ['PDFCROWD_USER'], os.environ['PDFCROWD_API_KEY'])
+def convert_html_to_pdf(html_content, output_pdf):
+    api_key = "fb99005ce15cd9ecbca33c72ff994556"
+    url = f"http://api.pdflayer.com/api/convert?access_key={api_key}"
 
-        # Leer el contenido del archivo HTML
-        with open(input_html, 'r') as file:
-            html_content = file.read()
+    payload = {
+        'document_html': html_content,
+        'css_url': '',
+        'title': 'Informe de Pruebas',
+        'margin_top': '0',
+        'margin_bottom': '0',
+        'margin_left': '0',
+        'margin_right': '0'
+    }
 
-        # Convertir el contenido HTML a PDF
-        with open(output_pdf, 'wb') as output_file:
-            client.convertStringToFile(html_content, output_pdf)
+    response = requests.post(url, data=payload)
 
-        print("PDF generado correctamente.")
-    except pdfcrowd.Error as e:
-        print(f"Error durante la conversión a PDF: {e}")
-        raise
+    if response.status_code == 200:
+        with open(output_pdf, 'wb') as pdf_file:
+            pdf_file.write(response.content)
+        print(f"PDF guardado en {output_pdf}")
+    else:
+        print(f"Error: {response.status_code}")
+        print(response.text)
 
 
-def send_email(subject):
+def send_email(subject, output_pdf):
     user = os.environ['EMAIL_USER']
     password = os.environ['EMAIL_PASS']
     recipients = os.environ['RECIPIENTS'].split(",")
     body = "Adjunto el informe de las pruebas ejecutadas."
-    input_html = "reportprueba.html"
-    output_pdf = "reportprueba.pdf"
 
-    # Convertir el archivo HTML a PDF
-    convert_html_to_pdf(input_html, output_pdf)
-
-    # Crear el contenedor del mensaje
     msg = MIMEMultipart()
     msg['From'] = user
     msg['To'] = ", ".join(recipients)
     msg['Subject'] = subject
 
-    # Adjuntar el cuerpo del mensaje
     msg.attach(MIMEText(body, 'plain'))
 
-    # Adjuntar el archivo PDF
     with open(output_pdf, "rb") as attachment:
         part = MIMEBase('application', 'octet-stream')
         part.set_payload(attachment.read())
@@ -55,7 +52,6 @@ def send_email(subject):
         part.add_header('Content-Disposition', f"attachment; filename= {output_pdf}")
         msg.attach(part)
 
-    # Iniciar sesión en el servidor y enviar el correo
     server = smtplib.SMTP('smtp.gmail.com', 587)
     server.starttls()
     server.login(user, password)
@@ -65,5 +61,13 @@ def send_email(subject):
 
 
 if __name__ == "__main__":
-    subject = "Reporte de pruebas"
-    send_email(subject)
+    with open('reportprueba.html', 'r') as file:
+        html_content = file.read()
+
+    output_pdf = 'reportprueba.pdf'
+
+    # Convertir el HTML a PDF
+    convert_html_to_pdf(html_content, output_pdf)
+
+    # Enviar el PDF por correo
+    send_email("Informe de Pruebas Automatizadas", output_pdf)
