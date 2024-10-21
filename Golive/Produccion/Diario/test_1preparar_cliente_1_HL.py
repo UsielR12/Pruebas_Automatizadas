@@ -47,7 +47,7 @@ class TestreinicioclientesHL():
 
     # Reiniciar cliente 1
     # 4 | Selecciona el listbox
-    select = Select(self.driver.find_element(By.ID, "elements"))
+    select = Select(self.driver.find_element(By.ID, "elementos"))
     # 5 | Selecciona una opción del listbox según el index
     # index 17 = PruebaCliente 1
     # index 18 = PruebaCliente 2
