@@ -43,7 +43,7 @@ jobs:
     - name: Send email with report
       if: always()
       run: |
-        python send_email.py "Informe de pruebas automatizadas diarias"
+        python send_email_prueba.py "Informe de pruebas automatizadas diarias"
       env:
         EMAIL_USER: ${{ secrets.EMAIL_USER }}
         EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
