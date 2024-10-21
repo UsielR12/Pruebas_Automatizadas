@@ -8,37 +8,41 @@ from email.mime.base import MIMEBase
 from email import encoders
 
 def convert_html_to_pdf(html_file, output_pdf):
-    # Tu API Key de HTML2PDF Rocket
-    api_key = "cf18732e-1635-4790-abc9-48b4d57ca10a"
+    # Tu API Key de ConvertAPI como Bearer Token
+    api_key = "secret_33Otwk7xGAueKYrd"  # Cambia esta clave por la tuya si es necesario
 
-    # URL de la API de HTML2PDF Rocket
-    url = "https://html2pdfrocket.p.rapidapi.com/convert"
+    # URL de la API de ConvertAPI para convertir HTML a PDF
+    url = "https://v2.convertapi.com/convert/html/to/pdf"
 
     # Leer el archivo HTML
     with open(html_file, 'r') as file:
         html_content = file.read()
 
-    # Parámetros de la solicitud
-    payload = {
-        "apikey": api_key,
-        "value": html_content,
-        "margin": "0"
+    # Configuración de encabezados
+    headers = {
+        'Authorization': f"Bearer {api_key}"
     }
 
-    headers = {
-        'x-rapidapi-host': "html2pdfrocket.p.rapidapi.com",
-        'x-rapidapi-key': api_key,
-        'Content-Type': 'application/x-www-form-urlencoded'
+    # Parámetros para la conversión
+    payload = {
+        'StoreFile': 'true'
+    }
+
+    files = {
+        'File': (html_file, open(html_file, 'rb'))
     }
 
     # Realizar la solicitud POST para convertir el HTML a PDF
-    response = requests.post(url, data=payload, headers=headers)
+    response = requests.post(url, headers=headers, data=payload, files=files)
 
     # Verificar si la solicitud fue exitosa
     if response.status_code == 200:
-        # Guardar el PDF generado en un archivo local
+        pdf_url = response.json()['Files'][0]['Url']
+        pdf_response = requests.get(pdf_url)
+
+        # Guardar el PDF descargado en un archivo local
         with open(output_pdf, 'wb') as pdf_file:
-            pdf_file.write(response.content)
+            pdf_file.write(pdf_response.content)
         print(f"PDF guardado en {output_pdf}")
     else:
         print(f"Error: {response.status_code}")
