@@ -9,7 +9,7 @@ from email import encoders
 
 def convert_html_to_pdf(html_file, output_pdf):
     # Tu API Key de HTML2PDF Rocket
-    api_key = "9e6657d4-9be3-458f-9751-3176de892cf5"
+    api_key = "cf18732e-1635-4790-abc9-48b4d57ca10a"
 
     # URL de la API de HTML2PDF Rocket
     url = "https://html2pdfrocket.p.rapidapi.com/convert"
