@@ -1,57 +1,36 @@
 import os
 import smtplib
-import requests
+import sys
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email import encoders
 
-
-def convert_html_to_pdf(html_content, output_pdf):
-    api_key = "fb99005ce15cd9ecbca33c72ff994556"
-    url = f"http://api.pdflayer.com/api/convert?access_key={api_key}"
-
-    payload = {
-        'document_html': html_content,
-        'css_url': '',
-        'title': 'Informe de Pruebas',
-        'margin_top': '0',
-        'margin_bottom': '0',
-        'margin_left': '0',
-        'margin_right': '0'
-    }
-
-    response = requests.post(url, data=payload)
-
-    if response.status_code == 200:
-        with open(output_pdf, 'wb') as pdf_file:
-            pdf_file.write(response.content)
-        print(f"PDF guardado en {output_pdf}")
-    else:
-        print(f"Error: {response.status_code}")
-        print(response.text)
-
-
-def send_email(subject, output_pdf):
+def send_email(subject):
     user = os.environ['EMAIL_USER']
     password = os.environ['EMAIL_PASS']
     recipients = os.environ['RECIPIENTS'].split(",")
     body = "Adjunto el informe de las pruebas ejecutadas."
+    filename = "reportprueba.html"
 
+    # Crear el contenedor del mensaje
     msg = MIMEMultipart()
     msg['From'] = user
     msg['To'] = ", ".join(recipients)
     msg['Subject'] = subject
 
+    # Adjuntar el cuerpo del mensaje
     msg.attach(MIMEText(body, 'plain'))
 
-    with open(output_pdf, "rb") as attachment:
+    # Adjuntar el archivo
+    with open(filename, "rb") as attachment:
         part = MIMEBase('application', 'octet-stream')
         part.set_payload(attachment.read())
         encoders.encode_base64(part)
-        part.add_header('Content-Disposition', f"attachment; filename= {output_pdf}")
+        part.add_header('Content-Disposition', "attachment; filename= %s" % filename)
         msg.attach(part)
 
+    # Iniciar sesión en el servidor y enviar el correo
     server = smtplib.SMTP('smtp.gmail.com', 587)
     server.starttls()
     server.login(user, password)
@@ -59,15 +38,10 @@ def send_email(subject, output_pdf):
     server.sendmail(user, recipients, text)
     server.quit()
 
-
 if __name__ == "__main__":
-    with open('reportprueba.html', 'r') as file:
-        html_content = file.read()
+    if len(sys.argv) != 2:
+        print("Usage: send_email.py <subject>")
+        sys.exit(1)
 
-    output_pdf = 'reportprueba.pdf'
-
-    # Convertir el HTML a PDF
-    convert_html_to_pdf(html_content, output_pdf)
-
-    # Enviar el PDF por correo
-    send_email("Informe de Pruebas Automatizadas", output_pdf)
+    subject = sys.argv[1]
+    send_email(subject)
