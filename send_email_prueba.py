@@ -11,27 +11,28 @@ def convert_html_to_pdf(html_file, output_pdf):
     # Tu API Key de HTML2PDF Rocket
     api_key = "9e6657d4-9be3-458f-9751-3176de892cf5"
 
-    # Leer el contenido HTML desde el archivo generado por pytest-html
-    with open(html_file, 'r') as file:
-        html_content = file.read()
-
     # URL de la API de HTML2PDF Rocket
     url = "https://html2pdfrocket.p.rapidapi.com/convert"
 
-    # Configuración de parámetros para la conversión
-    querystring = {
-        "value": html_content,
+    # Leer el archivo HTML
+    with open(html_file, 'r') as file:
+        html_content = file.read()
+
+    # Parámetros de la solicitud
+    payload = {
         "apikey": api_key,
-        "margin": "0"  # Ajusta los márgenes si es necesario
+        "value": html_content,
+        "margin": "0"
     }
 
     headers = {
         'x-rapidapi-host': "html2pdfrocket.p.rapidapi.com",
-        'x-rapidapi-key': api_key
+        'x-rapidapi-key': api_key,
+        'Content-Type': 'application/x-www-form-urlencoded'
     }
 
-    # Realizar la solicitud GET para la conversión
-    response = requests.get(url, headers=headers, params=querystring)
+    # Realizar la solicitud POST para convertir el HTML a PDF
+    response = requests.post(url, data=payload, headers=headers)
 
     # Verificar si la solicitud fue exitosa
     if response.status_code == 200:

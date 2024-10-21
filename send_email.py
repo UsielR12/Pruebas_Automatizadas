@@ -36,7 +36,7 @@ def send_email(subject):
     server.login(user, password)
     text = msg.as_string()
     server.sendmail(user, recipients, text)
-    server.quit()   
+    server.quit()
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
