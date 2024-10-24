@@ -1,7 +1,9 @@
 name: Golive Diario
 
 on: 
-  workflow_dispatch:
+   schedule:
+    - cron: '30 5 * * *' # 11:30 pm Costa Rica time (UTC-6)
+
 
 
 jobs:
