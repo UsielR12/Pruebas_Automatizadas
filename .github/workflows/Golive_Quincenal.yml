@@ -28,6 +28,7 @@ jobs:
         pip install selenium
         sudo apt-get update
         sudo apt-get install -y chromium-browser chromium-chromedriver
+        pip install requests
 
     - name: Verify day is first or third Monday
       run: |
