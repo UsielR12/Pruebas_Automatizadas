@@ -9,14 +9,10 @@ from email import encoders
 
 def convert_html_to_pdf(html_file, output_pdf):
     # Tu API Key de ConvertAPI como Bearer Token
-    api_key = "secret_33Otwk7xGAueKYrd"  # Cambia esta clave por la tuya si es necesario
+    api_key = "secret_Q33rqzUFQ1tauvX6"  # Cambia esta clave por la tuya si es necesario
 
     # URL de la API de ConvertAPI para convertir HTML a PDF
     url = "https://v2.convertapi.com/convert/html/to/pdf"
-
-    # Leer el archivo HTML
-    with open(html_file, 'r') as file:
-        html_content = file.read()
 
     # Configuración de encabezados
     headers = {
@@ -68,6 +64,14 @@ def send_email(subject):
 
     # Adjuntar el cuerpo del mensaje
     msg.attach(MIMEText(body, 'plain'))
+
+    # Adjuntar el archivo HTML
+    with open(html_filename, "rb") as attachment:
+        part = MIMEBase('application', 'octet-stream')
+        part.set_payload(attachment.read())
+        encoders.encode_base64(part)
+        part.add_header('Content-Disposition', f"attachment; filename= {html_filename}")
+        msg.attach(part)
 
     # Adjuntar el archivo PDF
     with open(pdf_filename, "rb") as attachment:
