@@ -1,14 +1,13 @@
 name: Golive Diario
 
 on: 
-   workflow_dispatch:
-
-
-
-jobs:
-  schedule:
+   schedule:
     - cron: '30 5 * * *' # 11:30 pm Costa Rica time (UTC-6)
 
+jobs:
+   test:
+    runs-on: ubuntu-latest
+    
     steps:
     - name: Check out repository
       uses: actions/checkout@v2
