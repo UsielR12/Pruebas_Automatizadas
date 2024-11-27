@@ -1,9 +1,8 @@
 name: Golive Diario
 
 on: 
-   schedule:
-    - cron: '30 5 * * *' # 11:30 pm Costa Rica time (UTC-6)
-
+   workflow_dispatch:
+   
 jobs:
    test:
     runs-on: ubuntu-latest
