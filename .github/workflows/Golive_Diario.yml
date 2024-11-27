@@ -6,8 +6,8 @@ on:
 
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
+  schedule:
+    - cron: '30 5 * * *' # 11:30 pm Costa Rica time (UTC-6)
 
     steps:
     - name: Check out repository
