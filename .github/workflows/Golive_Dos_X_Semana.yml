@@ -1,8 +1,7 @@
 name: Golive Dos X Semana
 
 on: 
- schedule:
-    - cron: '45 5 * * 1,4' # 11:45 pm Costa Rica time (UTC-6)
+ workflow_dispatch:
 
 
 jobs:
