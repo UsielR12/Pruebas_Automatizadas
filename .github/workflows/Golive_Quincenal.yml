@@ -28,22 +28,7 @@ jobs:
         sudo apt-get install -y chromium-browser chromium-chromedriver
         pip install requests
 
-    - name: Verify day is first or third Monday
-      run: |
-        DAY=$(date +'%d')
-        WEEKDAY=$(date +'%u')
-        if [[ $WEEKDAY -ne 1 ]]; then
-          echo "Today is not Monday"
-          exit 1
-        fi
-        if [[ $DAY -ge 1 && $DAY -le 7 ]]; then
-          echo "First Monday of the month"
-        elif [[ $DAY -ge 15 && $DAY -le 21 ]]; then
-          echo "Third Monday of the month"
-        else
-          echo "Not the first or third Monday of the month"
-          exit 1
-        fi
+    
 
     - name: List files
       run: ls -R
